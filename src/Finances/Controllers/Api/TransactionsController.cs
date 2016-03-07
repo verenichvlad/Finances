@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Finances.Models;
 using Microsoft.AspNet.Mvc;
 
 
@@ -10,10 +11,18 @@ namespace Finances.Controllers.Api
 
     public class TransactionsController : Controller
     {
+        private IFinancesRepo _repo;
+
+        public TransactionsController(IFinancesRepo repo)
+        {
+            _repo = repo;
+        }
+
         [HttpGet("api/transactions")]
         public JsonResult Get()
         {
-            return Json(new {title = "Example"});
+            var results = _repo.GetAllTransactionsWithCategory();
+            return Json(results);
         }
     }
 }
