@@ -6,7 +6,5 @@
         public string Name { get; set; }
         public string AmountType { get; set; }
         public decimal Amount { get; set; }
-
-        public Transaction Transaction { get; set; }
     }
 }

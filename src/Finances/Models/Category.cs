@@ -1,4 +1,6 @@
-﻿namespace Finances.Models
+﻿using System.Collections;
+
+namespace Finances.Models
 {
     public class Category
     {

@@ -1,4 +1,5 @@
-﻿using Finances.Models;
+﻿using System.Linq;
+using Finances.Models;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,11 +32,14 @@ namespace Finances
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<FinancesContext>();
+
+            services.AddTransient<FinancesContextSeed>();
+            services.AddScoped<IFinancesRepo, FinancesRepo>();
         }
 
         // Configure the HTTP request pipeline.
         // Turning things on
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, FinancesContextSeed seed)
         {
             app.UseIISPlatformHandler();
             app.UseStaticFiles();
@@ -48,6 +52,7 @@ namespace Finances
                     defaults:new {controller = "App", action ="Index"}
                     );
             });
+            seed.EnsureSeedData();
         }
 
         // Entry point for the application.
