@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Finances.Models;
+﻿using Finances.Models;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;

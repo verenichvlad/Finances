@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Finances.Models;
+﻿using Finances.Models;
 using Microsoft.AspNet.Mvc;
-
 
 namespace Finances.Controllers.Api
 {
