@@ -16,7 +16,7 @@
     <script>
         System.config({
             packages: {
-                appScripts: {
+                DistAppComponents: {
                     defaultExtension: 'js'
                 }
             }
@@ -24,13 +24,13 @@
     </script>
     <script>
 
-        System.import('appScripts/boot')
+        System.import('DistAppComponents/boot')
               .then(null, console.error.bind(console));
     </script>
 
 </head>
 <body>
     <h2>Demo of Angular 2 using ASP.NET 5 with Visual Studio 2015</h2>
-    <my-app>Loading...</my-app>
+    <app>Loading...</app>
 </body>
 </html>

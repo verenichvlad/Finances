@@ -1,6 +1,11 @@
 ﻿var gulp = require('gulp');
+var typescript = require('gulp-tsc');
+var sass = require('gulp-sass');
+
+var distFolder = './wwwroot/DistAppComponents/';
+var compFolder = './AppComponents/**/*';
  
-gulp.task('moveToLibs', function (done) {
+gulp.task('moveToLibs', function () {
     gulp.src([
       'node_modules/angular2/bundles/js',
       'node_modules/angular2/bundles/angular2.*.js*',
@@ -19,3 +24,25 @@ gulp.task('moveToLibs', function (done) {
       'node_modules/bootstrap/dist/css/bootstrap.css'
     ]).pipe(gulp.dest('./wwwroot/libs/css'));
 });
+
+gulp.task('compileTS', function() {
+    typescript();
+});
+
+gulp.task('compileSass', function() {
+    gulp.src(compFolder + 'scss', { base: "./" })
+        .pipe(sass())
+    .pipe(gulp.dest("."));
+
+});
+
+gulp.task('generateDist', function() {
+    gulp.src([compFolder, '!AppComponents/**/*.ts', '!AppComponents/**/*.scss', '!AppComponents/**/*.map'])
+        .pipe(gulp.dest(distFolder));
+});
+
+gulp.task('watch', function () {
+    gulp.watch(compFolder, ['compileSass', 'compileTS', 'generateDist']);
+});
+
+gulp.task('default', ['watch','compileSass', 'compileTS', 'generateDist']);
