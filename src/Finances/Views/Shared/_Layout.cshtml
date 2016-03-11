@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <base href="/" />
+    
+    <meta name="viewport" content="width=device-width"/>
+    <meta charset="utf-8"/>
+    <title>@ViewData["Title"]</title>
+
+    <link href="~/libs/css/bootstrap.css" rel="stylesheet"/>
+
+    <script src="~/libs/jquery.js"></script>
+    <script src="~/libs/bootstrap.js"></script>
+    <script src="~/libs/es6-shim.min.js"></script>
+    <script src="~/libs/system-polyfills.js"></script>
+    <script src="~/libs/shims_for_IE.js"></script>
+    <script src="~/libs/angular2-polyfills.js"></script>
+    <script src="~/libs/system.js"></script>
+    <script src="~/libs/rx.js"></script>
+    <script src="~/libs/angular2.dev.js"></script>
+    <script src="~/libs/router.dev.js"></script>
+
+
+    <script>
+        System.config({
+            packages: {
+                app: "~/DistAppComponents",
+                DistAppComponents: {
+                    defaultExtension: 'js'
+                }
+            }
+        });
+    </script>
+    <script>
+        System.import('DistAppComponents/boot')
+            .then(null, console.error.bind(console));
+    </script>
+</head>
+
+<body>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

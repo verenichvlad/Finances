@@ -9,27 +9,27 @@ System.register(['angular2/core'], function(exports_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var TestComponent;
+    var LoginComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            TestComponent = (function () {
-                function TestComponent() {
+            LoginComponent = (function () {
+                function LoginComponent() {
                 }
-                TestComponent = __decorate([
+                LoginComponent = __decorate([
                     core_1.Component({
-                        selector: 'test',
-                        templateUrl: 'test.html'
+                        selector: 'login',
+                        templateUrl: 'DistAppComponents/login/login.html'
                     }), 
                     __metadata('design:paramtypes', [])
-                ], TestComponent);
-                return TestComponent;
+                ], LoginComponent);
+                return LoginComponent;
             })();
-            exports_1("TestComponent", TestComponent);
+            exports_1("LoginComponent", LoginComponent);
         }
     }
 });
-//# sourceMappingURL=test.component.js.map
+//# sourceMappingURL=login.component.js.map

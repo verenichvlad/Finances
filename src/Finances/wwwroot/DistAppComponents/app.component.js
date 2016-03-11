@@ -18,12 +18,11 @@ System.register(['angular2/core'], function(exports_1) {
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
-                    this.test = "df";
                 }
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'app',
-                        templateUrl: 'DistAppComponents/app.html'
+                        template: 'Hello'
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

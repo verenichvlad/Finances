@@ -1,4 +1,5 @@
 ﻿using Finances.Models;
+using Glimpse;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -43,18 +44,32 @@ namespace Finances
 
         // Configure the HTTP request pipeline.
         // Turning things on
-        public void Configure(IApplicationBuilder app, FinancesContextSeed seed)
+        public void Configure(IApplicationBuilder app, FinancesContextSeed seed, IHostingEnvironment env)
         {
             app.UseIISPlatformHandler();
-            app.UseStaticFiles();
 
-            app.UseMvc(config =>
+            if (env.IsDevelopment())
             {
-                config.MapRoute(
-                    name: "Default",
-                    template:"{controller}/{action}/{id?}",
-                    defaults:new {controller = "App", action ="Index"}
-                    );
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
+            app.UseStaticFiles();
+            //app.UseGlimpse();
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default",
+                                "{controller=App}/{action=Index}/{id?}");
+                routes.MapRoute("spa-fallback",
+                                "{*anything}",
+                                new { controller = "App", action = "Index" });
+                routes.MapWebApiRoute("defaultApi",
+                                      "api/{controller}/{id?}");
             });
             seed.EnsureSeedData();
         }
