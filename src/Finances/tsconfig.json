@@ -1,4 +1,4 @@
-﻿{
+{
   "compilerOptions": {
     "target": "es5",
     "module": "system",
@@ -7,7 +7,12 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "rootDir": "wwwroot/app",
+    "outDir": "wwwroot/app",
+    "listFiles": true,
+    "noLib": false,
+    "diagnostics": true
   },
   "exclude": [
     "node_modules"

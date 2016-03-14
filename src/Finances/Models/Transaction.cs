@@ -10,6 +10,7 @@ namespace Finances.Models
         public string Description { get; set; }
         public DateTime Date { get; set; }
 
+        public User User { get; set; }
         public Category Category { get; set; }
         public Saving Saving { get; set; }
     }

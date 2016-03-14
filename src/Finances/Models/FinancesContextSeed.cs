@@ -1,24 +1,40 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 
 namespace Finances.Models
 {
     public class FinancesContextSeed
     {
         private FinancesContext _context;
+        private UserManager<User> _userManager;
 
-        public FinancesContextSeed(FinancesContext context)
+        public FinancesContextSeed(FinancesContext context, UserManager<User> userManager )
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        public void EnsureSeedData()
+        public async Task EnsureSeedDataAsync()
         {
+            if (await _userManager.FindByEmailAsync("verenichvlad@gmail.com") == null)
+            {
+                var newUser = new User()
+                {
+                    UserName = "verenichvlad",
+                    Email = "verenichvlad@gmail.com"
+                };
+
+                await _userManager.CreateAsync(newUser, "Pa&&w0rd");
+            }
+
             if (_context.Transactions.Any()) return;
 
             var saveTrans1 = new Transaction()
             {
                 Title = "FebruarySaving",
+                User = await _userManager.FindByEmailAsync("verenichvlad@gmail.com"),
                 Date = DateTime.Now,
                 Amount = 1500,
                 Category = new Category()
@@ -39,6 +55,7 @@ namespace Finances.Models
             {
                 Title = "FebruaryIncome",
                 Date = DateTime.Now,
+                User = await _userManager.FindByEmailAsync("verenichvlad@gmail.com"),
                 Amount = 4000,
                 Category = new Category()
                 {
@@ -53,6 +70,7 @@ namespace Finances.Models
             {
                 Title = "Food",
                 Date = DateTime.Now,
+                User = await _userManager.FindByEmailAsync("verenichvlad@gmail.com"),
                 Amount = -230,
                 Category = new Category()
                 {
@@ -67,6 +85,7 @@ namespace Finances.Models
             {
                 Title = "Tv",
                 Date = DateTime.Now,
+                User = await _userManager.FindByEmailAsync("verenichvlad@gmail.com"),
                 Amount = -1005,
                 Category = new Category()
                 {
@@ -81,6 +100,7 @@ namespace Finances.Models
             {
                 Title = "Clothes",
                 Date = DateTime.Now,
+                User = await _userManager.FindByEmailAsync("verenichvlad@gmail.com"),
                 Amount = -432,
                 Category = new Category()
                 {

@@ -1,48 +1,71 @@
-﻿var gulp = require('gulp');
-var typescript = require('gulp-tsc');
-var sass = require('gulp-sass');
+﻿/// <binding BeforeBuild='default' />
 
-var distFolder = './wwwroot/DistAppComponents/';
-var compFolder = './AppComponents/**/*';
- 
-gulp.task('moveToLibs', function () {
-    gulp.src([
-      'node_modules/angular2/bundles/js',
-      'node_modules/angular2/bundles/angular2.*.js*',
-      'node_modules/angular2/bundles/angular2-polyfills.js',
-      'node_modules/angular2/bundles/http.*.js*',
-      'node_modules/angular2/bundles/router.*.js*',
-      'node_modules/es6-shim/es6-shim.min.js*',
-      'node_modules/angular2/es6/dev/src/testing/shims_for_IE.js',
-      'node_modules/systemjs/dist/*.*',
-      'node_modules/jquery/dist/jquery.*js',
-      'node_modules/bootstrap/dist/js/bootstrap*.js',
-      'node_modules/rxjs/bundles/Rx.js'
-    ]).pipe(gulp.dest('./wwwroot/libs/'));
- 
-    gulp.src([
-      'node_modules/bootstrap/dist/css/bootstrap.css'
-    ]).pipe(gulp.dest('./wwwroot/libs/css'));
+"use strict";
+
+var _ = require('lodash'),
+    gulp = require('gulp'),
+    uglify = require('gulp-uglify'),
+    cssmin = require('gulp-cssmin'),
+    rename = require('gulp-rename');
+
+var angularJs = [
+    './node_modules/angular2/bundles/angular2.dev.js',
+    './node_modules/angular2/bundles/router.dev.js',
+    './node_modules/angular2/bundles/angular2-polyfills.js',
+    './node_modules/angular2/bundles/http.dev.js'
+];
+
+var js = [
+    './node_modules/bootstrap/dist/js/bootstrap.js',
+    './node_modules/systemjs/dist/system.js',
+    './node_modules/rxjs/bundles/Rx.js',
+    './node_modules/typescript/lib/typescript.js',
+    './node_modules/jquery/dist/jquery.js'
+];
+
+var css = [
+    './node_modules/bootstrap/dist/css/bootstrap.css'
+];
+
+var fonts = [
+    './node_modules/bootstrap/dist/fonts/*.*'
+];
+
+gulp.task('copy-js', function () {
+    _.forEach(js, function (file, _) {
+        gulp.src(file).pipe(gulp.dest('./wwwroot/js'))
+    });
+    _.forEach(angularJs, function (file, _) {
+        gulp.src(file).pipe(gulp.dest('./wwwroot/js/angular2'))
+    });
 });
 
-gulp.task('compileTS', function() {
-    typescript();
+gulp.task('copy-min-js', function () {
+    _.forEach(js, function (file, _) {
+        gulp.src(file).pipe(uglify()).pipe(rename({ extname: '.min.js' })).pipe(gulp.dest('./wwwroot/js'))
+    });
+    _.forEach(angularJs, function (file, _) {
+        gulp.src(file).pipe(uglify()).pipe(rename({ extname: '.min.js' })).pipe(gulp.dest('./wwwroot/js/angular2'))
+    });
 });
 
-gulp.task('compileSass', function() {
-    gulp.src(compFolder + 'scss', { base: "./" })
-        .pipe(sass())
-    .pipe(gulp.dest("."));
-
+gulp.task('copy-css', function () {
+    _.forEach(css, function (file, _) {
+        gulp.src(file).pipe(gulp.dest('./wwwroot/css'))
+    });
+    _.forEach(fonts, function (file, _) {
+        gulp.src(file).pipe(gulp.dest('./wwwroot/fonts'))
+    });
 });
 
-gulp.task('generateDist', function() {
-    gulp.src([compFolder, '!AppComponents/**/*.ts', '!AppComponents/**/*.scss', '!AppComponents/**/*.map'])
-        .pipe(gulp.dest(distFolder));
+gulp.task('copy-min-css', function () {
+    _.forEach(css, function (file, _) {
+        gulp.src(file).pipe(cssmin()).pipe(rename({ extname: '.min.css' })).pipe(gulp.dest('./wwwroot/css'))
+    });
+    _.forEach(fonts, function (file, _) {
+        gulp.src(file).pipe(gulp.dest('./wwwroot/fonts'))
+    });
 });
 
-gulp.task('watch', function () {
-    gulp.watch(compFolder, ['compileSass', 'compileTS', 'generateDist']);
-});
-
-gulp.task('default', ['watch','compileSass', 'compileTS', 'generateDist']);
+gulp.task('default', ['copy-js', 'copy-css']);
+gulp.task('minify', ['copy-min-js', 'copy-min-css']);
