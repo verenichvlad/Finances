@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Mvc;
 
 
-namespace WebApplication1.Controllers
+namespace Finances.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: /<controller>/
+        [Authorize]
         public IActionResult Index()
         {
             return View();

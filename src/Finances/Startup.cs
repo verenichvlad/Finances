@@ -3,6 +3,7 @@ using Microsoft.AspNet.Authentication.Cookies;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,23 +42,9 @@ namespace Finances
             })
                 .AddEntityFrameworkStores<FinancesContext>();
 
-            services.Configure<CookieAuthenticationOptions>(opt =>
+            services.Configure<IdentityOptions>(options =>
             {
-                opt.LoginPath = PathString.FromUriComponent("/Auth/Login");
-                //opt.Notifications = new CookieAuthenticationNotifications()
-                //{
-                //    OnApplyRedirect = ctx =>
-                //    {
-                //        if (ctx.Request.Path.StartsWithSegments("/api") && ctx.Response.StatusCode == 200)
-                //        {
-                //            ctx.Response.StatusCode = 401;
-                //        }
-                //        else
-                //        {
-                //            ctx.Response.Redirect(ctx.RedirectUri);
-                //        }
-                //    }
-                //};
+                options.Cookies.ApplicationCookie.LoginPath = new Microsoft.AspNet.Http.PathString("/Auth/Login");
             });
 
             services.AddTransient<FinancesContextSeed>();

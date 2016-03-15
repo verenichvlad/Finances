@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 
 
-namespace WebApplication1.Controllers
+namespace Finances.Controllers
 {
     [Route("api/[controller]")]
     public class RandomController : Controller

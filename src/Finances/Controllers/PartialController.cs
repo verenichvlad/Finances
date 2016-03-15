@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Mvc;
 
 
-namespace WebApplication1.Controllers
+namespace Finances.Controllers
 {
     public class PartialController : Controller
     {
