@@ -6,7 +6,14 @@ var _ = require('lodash'),
     gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     cssmin = require('gulp-cssmin'),
-    rename = require('gulp-rename');
+    rename = require('gulp-rename'),
+    sass = require('gulp-sass');
+
+gulp.task('sass', function () {
+    gulp.src('./wwwroot/css/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('./'));
+});
 
 var angularJs = [
     './node_modules/angular2/bundles/angular2.dev.js',
@@ -67,5 +74,5 @@ gulp.task('copy-min-css', function () {
     });
 });
 
-gulp.task('default', ['copy-js', 'copy-css']);
+gulp.task('default', ['sass', 'copy-js', 'copy-css']);
 gulp.task('minify', ['copy-min-js', 'copy-min-css']);
