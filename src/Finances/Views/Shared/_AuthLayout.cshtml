@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width"/>
     <title>@ViewBag.Title</title>
 
-    <link rel="stylesheet" asp-href-include="~/css/site.css">
+    <link rel="stylesheet" asp-href-include="~/css/bootstrap.css">
+    <link rel="stylesheet" asp-href-include="~/css/auth.css">
 
     <script src="~/js/jquery.js"></script>
     <script src="~/js/bootstrap.js"></script>
 </head>
 
 <body>
-    <div>
-        @RenderBody()
+<div class="row">
+    <div class="col-md-3 col-md-offset-6">
+        <div class="auth-container">
+            @RenderBody()
+        </div>
     </div>
+</div>
 </body>
 </html>
