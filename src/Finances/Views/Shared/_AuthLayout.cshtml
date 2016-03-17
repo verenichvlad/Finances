@@ -2,39 +2,15 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width"/>
     <title>@ViewBag.Title</title>
 
-    <environment names="Development">
-        <!-- Css -->
-        <link rel="stylesheet" asp-href-include="~/css/*.css">
-        <!-- Js -->
-        <script src="~/js/jquery.js"></script>
-        <script src="~/js/bootstrap.js"></script>
-        <script src="~/js/system.js"></script>
-        <script src="~/js/rx.js"></script>
-        <script src="~/js/typescript.js"></script>
-        <script src="~/js/angular2/angular2.dev.js"></script>
-        <script src="~/js/angular2/angular2-polyfills.js"></script>
-        <script src="~/js/angular2/http.dev.js"></script>
-        <script src="~/js/angular2/router.dev.js"></script>
-    </environment>
-    <environment names="Production">
-        <!-- Css -->
-        <link rel="stylesheet" asp-href-include="~/css/*.min.css" asp-append-version="true">
-        <!-- Js -->
-        <script src="~/js/jquery.min.js"></script>
-        <script src="~/js/bootstrap.min.js"></script>
-        <script src="~/js/system.min.js"></script>
-        <script src="~/js/rx.min.js"></script>
-        <script src="~/js/typescript.min.js"></script>
-        <script src="~/js/angular2/angular2.dev.min.js"></script>
-        <script src="~/js/angular2/angular2-polyfills.min.js"></script>
-        <script src="~/js/angular2/http.dev.min.js"></script>
-        <script src="~/js/angular2/router.dev.min.js"></script>
-    </environment>
+    <link rel="stylesheet" asp-href-include="~/css/site.css">
 
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/bootstrap.js"></script>
 </head>
+
 <body>
     <div>
         @RenderBody()

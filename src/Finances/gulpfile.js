@@ -10,9 +10,11 @@ var _ = require('lodash'),
     sass = require('gulp-sass');
 
 gulp.task('sass', function () {
-    gulp.src('./wwwroot/css/*.scss')
+    setInterval(function() {
+        gulp.src('./wwwroot/css/site.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('./'));
+        .pipe(gulp.dest('./wwwroot/css/'));
+    }, 4000);
 });
 
 var angularJs = [
