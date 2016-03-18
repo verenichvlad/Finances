@@ -9,30 +9,27 @@ System.register(["angular2/core"], function(exports_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var MvcComponent;
+    var StatusComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            MvcComponent = (function () {
-                function MvcComponent() {
+            StatusComponent = (function () {
+                function StatusComponent() {
                 }
-                MvcComponent.prototype.ngOnInit = function () {
-                    this.message = "The '/partial/message' path was used as the Angular2 'templateUrl'. However, this routes through the 'PartialController' hitting the 'Message' action and is served after standard MVC pre-processing. Likewise, there is a 'message' property bound to the <blockqoute> element.";
-                };
-                MvcComponent = __decorate([
+                StatusComponent = __decorate([
                     core_1.Component({
-                        selector: "mvc",
-                        templateUrl: "/partial/message"
+                        selector: "status",
+                        templateUrl: "app/components/status.html"
                     }), 
                     __metadata('design:paramtypes', [])
-                ], MvcComponent);
-                return MvcComponent;
+                ], StatusComponent);
+                return StatusComponent;
             })();
-            exports_1("MvcComponent", MvcComponent);
+            exports_1("StatusComponent", StatusComponent);
         }
     }
 });
-//# sourceMappingURL=mvc.component.js.map
+//# sourceMappingURL=status.component.js.map
