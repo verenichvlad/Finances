@@ -6,7 +6,7 @@ declare var System: any;
 
 @Component({
     selector: "app",
-    templateUrl: "/app/app.html",
+    templateUrl: "/partial/app",
     directives: [ROUTER_DIRECTIVES]
 })
 

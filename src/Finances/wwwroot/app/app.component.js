@@ -52,7 +52,7 @@ System.register(["angular2/core", "angular2/router", "./components/static.compon
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: "app",
-                        templateUrl: "/app/app.html",
+                        templateUrl: "/partial/app",
                         directives: [router_1.ROUTER_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [router_1.Router, router_1.Location])
