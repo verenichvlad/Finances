@@ -8,34 +8,28 @@
     <!-- Css -->
     <link rel="stylesheet" asp-href-include="~/css/bootstrap.css">
     <link rel="stylesheet" asp-href-include="~/css/site.css">
+
     <!-- Js -->
-    <script src="~/js/jquery.js"></script>
-    <script src="~/js/bootstrap.js"></script>
-    <script src="~/js/slideout.js"></script>
-    <script src="~/js/slideConfig.js"></script>
     <script src="~/js/system.js"></script>
     <script src="~/js/rx.js"></script>
     <script src="~/js/angular2/angular2.dev.js"></script>
     <script src="~/js/angular2/angular2-polyfills.js"></script>
     <script src="~/js/angular2/http.dev.js"></script>
     <script src="~/js/angular2/router.dev.js"></script>
+    <script src="~/js/sysConfig.js"></script>
 
-    <!-- Configure SystemJS -->
-    <script>
-        System.config({
-            packages: {
-                app: {
-                    format: 'register',
-                    defaultExtension: 'js'
-                }
-            }
-        });
-        System.import('app/boot')
-              .then(null, console.error.bind(console));
-    </script>
+
+    <script src="~/js/vendors/modernizr-custom.js"></script>
+    <script src="~/js/vendors/jquery.js"></script>
+    <script src="~/js/vendors/bootstrap.js"></script>
+    <script src="~/js/vendors/classie.js"></script>
+    <script src="~/js/vendors/dummydata.js"></script>
+    <script src="~/js/vendors/menu.js"></script>
 </head>
 <base href="/" />
 <body>
     @RenderBody()
+
+    @RenderSection("Scripts", false);
 </body>
 </html>
