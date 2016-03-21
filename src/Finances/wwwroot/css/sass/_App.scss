@@ -1,0 +1,40 @@
+﻿.cf:before,
+.cf:after {
+	content: ' ';
+	display: table;
+}
+
+.cf:after {
+	clear: both;
+}
+
+body {
+	font-family: 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
+	overflow: hidden;
+	margin: 0;
+	color: #111;
+	background: #f5fffd;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+	overflow-y: auto;
+	height: 100vh;
+}
+
+a {
+	text-decoration: none;
+	color: #fff;
+	outline: none;
+}
+
+a:hover {
+	color: #ddd;
+    text-decoration: none;
+}
+
+.app-header {
+    height: 120px;
+    background: #cddbd8;
+}
