@@ -1,0 +1,19 @@
+﻿<nav id="ml-menu" class="menu">
+    <button class="menu__close-btn fin-btn" aria-label="Close Menu"><span class="glyphicon glyphicon-remove"></span></button>
+
+    <div class="menu__wrap">
+        <ul data-menu="main" class="menu__level">
+            <li class="menu__item"><a class="menu__link" data-submenu="submenu-1"  (click)="onNavigate('status')">Status</a></li>
+            <li class="menu__item"><a class="menu__link" href="about">About</a></li>
+            <li class="menu__item"><a class="menu__link" asp-controller="Auth" asp-action="Logout">Logout</a></li>
+        </ul>
+
+        <!-- Submenu 1 -->
+        <ul data-menu="submenu-1" class="menu__level">
+            <li class="menu__item"><a class="menu__link" href="status/today">Today</a></li>
+            <li class="menu__item"><a class="menu__link" href="status/month">This month</a></li>
+            <li class="menu__item"><a class="menu__link" href="status/week">This week</a></li>
+        </ul>
+    </div>
+
+</nav>

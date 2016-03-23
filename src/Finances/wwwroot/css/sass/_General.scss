@@ -1,0 +1,30 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+
+.fin-btn {
+    border: 0;
+    background: none;
+}
+
+.fin-btn:focus {
+  outline: none;
+}
+
+.fin-loading-txt {
+    margin: 10px;
+    font-weight: 900;
+}
+
+.fin-loading-txt:after {
+    content: ' component is loading';
+    font-weight: 600;
+}
+
+.fin-loading-icon {
+    background: url(../img/loading.svg);
+    display: inline-block;
+    width: 40px;
+    height: 10px;
+}

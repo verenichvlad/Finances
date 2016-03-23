@@ -15,6 +15,10 @@ gulp.task('sass', function () {
     .pipe(gulp.dest('./wwwroot/css/'));
 });
 
+gulp.task('watch', function () {
+    gulp.watch(['./wwwroot/css/*.scss', './wwwroot/app/components/*.scss'], ['sass']);
+});
+
 var angularJs = [
     './node_modules/angular2/bundles/angular2.dev.js',
     './node_modules/angular2/bundles/router.dev.js',

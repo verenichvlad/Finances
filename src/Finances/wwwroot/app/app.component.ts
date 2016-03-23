@@ -1,16 +1,12 @@
 ﻿import {Component, OnInit} from "angular2/core";
 import {Router, RouteDefinition, RouteConfig, ROUTER_DIRECTIVES} from "angular2/router";
+
+import {MenuComponent} from "./components/menu.component";
+import {HeaderComponent} from "./components/header.component";
+
 import {StatusComponent} from "./components/status.component";
+import {AboutComponent} from "./components/about.component";
 
-declare var MLMenu: any;
-declare var classie: any;
-declare var dummyData: any;
-
-@Component({
-    selector: "app",
-    templateUrl: "/PartialTemplates/app",
-    directives: [ROUTER_DIRECTIVES]
-})
 
 @RouteConfig([
     {
@@ -18,32 +14,21 @@ declare var dummyData: any;
         component: StatusComponent,
         name: "Status",
         useAsDefault: true
+    },
+    {
+        path: "/about",
+        component: AboutComponent,
+        name: "About"
     }
 ])
 
-export class AppComponent implements OnInit {
-    ngOnInit(): any {
-        var menuEl = document.getElementById('ml-menu'),
-            mlmenu = new MLMenu(menuEl, {
-                backCtrl: false,
-                onItemClick: closeMenu()
-            });
+@Component({
+    selector: "app",
+    templateUrl: "app/app.component.html",
+    styleUrls: ["app/app.component.css"],
+    directives: [ROUTER_DIRECTIVES, MenuComponent, HeaderComponent]
+})
 
-        // mobile menu toggle
-        var openMenuCtrl = document.querySelector('.action--open'),
-            closeMenuCtrl = document.querySelector('.action--close');
-
-        openMenuCtrl.addEventListener('click', openMenu);
-        closeMenuCtrl.addEventListener('click', closeMenu);
-
-        function openMenu() {
-            classie.add(menuEl, 'menu--open');
-        }
-
-        function closeMenu() {
-            classie.remove(menuEl, 'menu--open');
-        }
-
-        return null;
-    }
+export class AppComponent {
+    
 }
