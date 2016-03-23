@@ -79,16 +79,16 @@
 
             // set current menu class
             if( pos === self.current ) {
-                classie.add(menuEl, 'menu__level--current');
+                classie.add(menuEl, 'menu__level_current');
             }
         });
 
         // create back button
         if( this.options.backCtrl ) {
             this.backCtrl = document.createElement('button');
-            this.backCtrl.className = 'menu__back menu__back--hidden';
+            this.backCtrl.className = 'menu__back menu__back_hidden';
             this.backCtrl.setAttribute('aria-label', 'Go back');
-            this.backCtrl.innerHTML = '<span class="icon icon--arrow-left"></span>';
+            this.backCtrl.innerHTML = '<span class="glyphicon glyphicon-chevron-left"></span>';
             this.el.insertBefore(this.backCtrl, this.el.firstChild);
         }
 		
@@ -124,11 +124,11 @@
                     }
                     else {
                         // add class current
-                        var currentlink = self.el.querySelector('.menu__link--current');
+                        var currentlink = self.el.querySelector('.menu__link_current');
                         if( currentlink ) {
-                            classie.remove(self.el.querySelector('.menu__link--current'), 'menu__link--current');
+                            classie.remove(self.el.querySelector('.menu__link_current'), 'menu__link_current');
                         }
-                        classie.add(ev.target, 'menu__link--current');
+                        classie.add(ev.target, 'menu__link_current');
 						
                         // callback
                         self.options.onItemClick(ev, itemName);
@@ -229,8 +229,8 @@
                         classie.remove(currentMenu, isBackNavigation ? 'animate-outToLeft' : 'animate-outToRight');
                         classie.remove(nextMenuEl, isBackNavigation ? 'animate-inFromRight' : 'animate-inFromLeft');
                     }
-                    classie.remove(currentMenu, 'menu__level--current');
-                    classie.add(nextMenuEl, 'menu__level--current');
+                    classie.remove(currentMenu, 'menu__level_current');
+                    classie.add(nextMenuEl, 'menu__level_current');
 
                     //reset current
                     self.current = nextMenuIdx;
@@ -239,7 +239,7 @@
                     if( !isBackNavigation ) {
                         // show back button
                         if( self.options.backCtrl ) {
-                            classie.remove(self.backCtrl, 'menu__back--hidden');
+                            classie.remove(self.backCtrl, 'menu__back_hidden');
                         }
 						
                         // add breadcrumb
@@ -247,7 +247,7 @@
                     }
                     else if( self.current === 0 && self.options.backCtrl ) {
                         // hide back button
-                        classie.add(self.backCtrl, 'menu__back--hidden');
+                        classie.add(self.backCtrl, 'menu__back_hidden');
                     }
 
                     // we can navigate again..

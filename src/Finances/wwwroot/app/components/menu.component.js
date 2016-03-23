@@ -27,22 +27,20 @@ System.register(["angular2/core", "angular2/router"], function(exports_1) {
                     this.router.parent.navigate(routeName);
                 };
                 MenuComponent.prototype.ngOnInit = function () {
-                    //var menuEl = document.getElementById('ml-menu'),
-                    //    mlmenu = new MLMenu(menuEl, {
-                    //        backCtrl: true,
-                    //        onItemClick: closeMenu()
-                    //    });
-                    //// mobile menu toggle
-                    //var openMenuCtrl = document.querySelector('.action--open'),
-                    //    closeMenuCtrl = document.querySelector('.action--close');
-                    //openMenuCtrl.addEventListener('click', openMenu);
-                    //closeMenuCtrl.addEventListener('click', closeMenu);
-                    //function openMenu() {
-                    //    classie.add(menuEl, 'menu--open');
-                    //}
-                    //function closeMenu() {
-                    //    classie.remove(menuEl, 'menu--open');
-                    //}
+                    var menuEl = document.getElementById('ml-menu'), mlmenu = new MLMenu(menuEl, {
+                        backCtrl: true,
+                        onItemClick: closeMenu()
+                    });
+                    // mobile menu toggle
+                    var openMenuCtrl = document.querySelector('.action_open'), closeMenuCtrl = document.querySelector('.action_close');
+                    openMenuCtrl.addEventListener('click', openMenu);
+                    closeMenuCtrl.addEventListener('click', closeMenu);
+                    function openMenu() {
+                        classie.add(menuEl, 'menu_open');
+                    }
+                    function closeMenu() {
+                        classie.remove(menuEl, 'menu_open');
+                    }
                     return null;
                 };
                 MenuComponent = __decorate([

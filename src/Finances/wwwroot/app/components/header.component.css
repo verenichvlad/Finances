@@ -1,13 +1,13 @@
 ﻿.header-left {
-    line-height: 100px;
-    text-align: center;
     left: 0;
     width: 300px;
+    background: #060E15;
 }
 
 
 .header-right {
     left: 300px;
+    background: #13293B;
     width: calc(100vw - 300px);
 }
 
@@ -16,8 +16,9 @@
     position: fixed;
     top: 0;
     height: 100px;
-    background: #2D5E88;
     color: #fff;
+    text-align: center;
+    line-height: 100px;
 }
 
 .header__menu-btn {
@@ -27,5 +28,4 @@
 
 .header__heading {
     display: inline-block;
-
 }

@@ -3,8 +3,8 @@
 
     <div class="menu__wrap">
         <ul data-menu="main" class="menu__level">
-            <li class="menu__item"><a class="menu__link" data-submenu="submenu-1"  (click)="onNavigate('status')">Status</a></li>
-            <li class="menu__item"><a class="menu__link" href="about">About</a></li>
+            <li class="menu__item"><a class="menu__link" data-submenu="submenu-1"  (click)="onNavigate('Status')">Status</a></li>
+            <li class="menu__item"><a class="menu__link" (click)="onNavigate('About')">About</a></li>
             <li class="menu__item"><a class="menu__link" asp-controller="Auth" asp-action="Logout">Logout</a></li>
         </ul>
 
