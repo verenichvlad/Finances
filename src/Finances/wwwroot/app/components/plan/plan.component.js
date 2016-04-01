@@ -9,28 +9,27 @@ System.register(["angular2/core"], function(exports_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var HeaderComponent;
+    var PlanComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            HeaderComponent = (function () {
-                function HeaderComponent() {
+            PlanComponent = (function () {
+                function PlanComponent() {
                 }
-                HeaderComponent = __decorate([
+                PlanComponent = __decorate([
                     core_1.Component({
-                        selector: "header",
-                        templateUrl: "HybridTemplates/Header",
-                        styleUrls: ["app/components/header.component.css"]
+                        selector: "plan",
+                        templateUrl: "app/components/plan/plan.html"
                     }), 
                     __metadata('design:paramtypes', [])
-                ], HeaderComponent);
-                return HeaderComponent;
+                ], PlanComponent);
+                return PlanComponent;
             })();
-            exports_1("HeaderComponent", HeaderComponent);
+            exports_1("PlanComponent", PlanComponent);
         }
     }
 });
-//# sourceMappingURL=header.component.js.map
+//# sourceMappingURL=plan.component.js.map

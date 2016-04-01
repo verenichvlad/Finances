@@ -1,0 +1,114 @@
+﻿
+
+<!--TODO Zrobić Panele-->
+
+<div class="container">
+    <h2>Welcome to plan page</h2>
+
+    <p>Here you'll setup your plan for following month</p>
+
+    <h3>Everyday expances</h3>
+    <div class="form-group">
+        <label for="daily">How much will you spend daily?</label>
+        <input type="number" class="form-control" id="daily">
+    </div>
+
+
+
+
+    <h3>Cycle expances</h3>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>What?</th>
+                    <th>How much?</th>
+                    <th>Period</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Gym</td>
+                    <td>500</td>
+                    <td>Mothly</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4>Add new expance</h4>
+
+    <div class="form-group">
+        <label for="cycleExpWhat">What do you need?</label>
+        <input type="text" class="form-control" id="cycleExpWhat">
+    </div>
+
+    <div class="form-group">
+        <label for="cycleExpHowMuch">How much?</label>
+        <input type="number" class="form-control" id="cycleExpHowMuch">
+    </div>
+
+    <div class="form-group">
+        <label>Period:</label>
+        <select class="form-control">
+            <option value="volvo">Daily</option>
+            <option value="opel">Weekly</option>
+            <option value="saab">Monthly</option>
+        </select>
+    </div>
+
+    <input class="btn" type="button" value="Add"/>
+
+
+
+
+    <h3>Plan extra expance</h3>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>What?</th>
+                    <th>How much?</th>
+                    <th>This month only</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Apple Laptop</td>
+                    <td>9000</td>
+                    <td><input type="checkbox" /></td>
+                </tr>
+                <tr>
+                    <td>Citroen c5</td>
+                    <td>18000</td>
+                    <td><input type="checkbox" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4>Add new expance</h4>
+
+    <div class="form-group">
+        <label for="extraExpWhat">What do you need?</label>
+        <input type="text" class="form-control" id="extraExpWhat">
+    </div>
+
+    <div class="form-group">
+        <label for="extraExpHowMuch">How much?</label>
+        <input type="number" class="form-control" id="extraExpHowMuch">
+    </div>
+
+    <div class="form-group">
+        <label for="extraExpThisMonthOnly">This month only?</label>
+        <input type="checkbox" class="form-control" id="extraExpThisMonthOnly">
+    </div>
+
+    <input class="btn" type="button" value="Add" />
+
+
+
+    <input class="btn" type="button" value="Submit" (click)="submitPlanForm()" />
+</div>

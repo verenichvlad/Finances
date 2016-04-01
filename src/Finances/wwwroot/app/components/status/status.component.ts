@@ -2,7 +2,7 @@
 
 @Component({
     selector: "status",
-    templateUrl: "app/components/status.html"
+    templateUrl: "app/components/status/status.html"
 })
 export class StatusComponent {
 }

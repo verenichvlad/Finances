@@ -22,7 +22,7 @@ System.register(["angular2/core"], function(exports_1) {
                 StatusComponent = __decorate([
                     core_1.Component({
                         selector: "status",
-                        templateUrl: "app/components/status.html"
+                        templateUrl: "app/components/status/status.html"
                     }), 
                     __metadata('design:paramtypes', [])
                 ], StatusComponent);

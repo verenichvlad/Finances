@@ -1,7 +1,41 @@
-﻿<div class="header-left">
-    <button class="header__menu-btn fin-btn"><i class="glyphicon glyphicon-list-alt"></i></button>
-</div>
+﻿<header class="head">
 
-<header class="header-right">
-        <h2 class="header__heading">Finances</h2>
+    <nav class="head__navigation">
+        <button class="show-menu-btn fin-btn" (click)="trigMenu(menu)">
+            <i class="glyphicon glyphicon-menu-hamburger"></i>
+        </button>
+    </nav>
+
+    <div class="brand">
+        <h1 class="brand__txt">Finances</h1>
+    </div>
+
+
+    <nav class="slideout-menu" #menu>
+        <div id="menu__account" class="menu__divider">
+            <div class="user-info">
+                <i class="user-info__icon glyphicon glyphicon-user"></i>
+                <p class="user-info__name"></p>
+            </div>
+            <ul class="menu__utility">
+                <li><a href="#" title="Login"><i class="glyphicon glyphicon-lock"></i>Logout</a></li>
+            </ul>
+        </div>
+        <ul id="menu__content" class="menu__utility menu__divider">
+            <li><a href="/status">Status</a></li>
+            <li><a href="/plan">Plan</a></li>
+            <li><a href="#">Track expances</a></li>
+            <li><a href="#">Savings</a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+        <ul id="menu__bottom" class="menu__utility">
+            <li class="search">
+                <form method="get" id="searchform" class="form-horizontal" role="form" action="//graphpaperpress.com/">
+                    <label for="s" class="assistive-text">Search</label>
+                    <input type="text" class="field form-control" name="s" id="s" placeholder="Search">
+                    <input type="submit" class="submit button button-grey" name="submit" id="searchsubmit" value="Search">
+                </form>
+            </li>
+        </ul>
+    </nav>
 </header>

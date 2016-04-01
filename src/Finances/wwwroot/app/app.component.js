@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router", "./components/menu.component", "./components/header.component", "./components/status.component", "./components/about.component"], function(exports_1) {
+System.register(["angular2/core", "angular2/router", "./components/header/header.component", "./components/status/status.component", "./components/plan/plan.component", "./components/about/about.component"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(["angular2/core", "angular2/router", "./components/menu.componen
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, menu_component_1, header_component_1, status_component_1, about_component_1;
+    var core_1, router_1, header_component_1, status_component_1, plan_component_1, about_component_1;
     var AppComponent;
     return {
         setters:[
@@ -18,14 +18,14 @@ System.register(["angular2/core", "angular2/router", "./components/menu.componen
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (menu_component_1_1) {
-                menu_component_1 = menu_component_1_1;
-            },
             function (header_component_1_1) {
                 header_component_1 = header_component_1_1;
             },
             function (status_component_1_1) {
                 status_component_1 = status_component_1_1;
+            },
+            function (plan_component_1_1) {
+                plan_component_1 = plan_component_1_1;
             },
             function (about_component_1_1) {
                 about_component_1 = about_component_1_1;
@@ -43,6 +43,11 @@ System.register(["angular2/core", "angular2/router", "./components/menu.componen
                             useAsDefault: true
                         },
                         {
+                            path: "/plan",
+                            component: plan_component_1.PlanComponent,
+                            name: "Plan"
+                        },
+                        {
                             path: "/about",
                             component: about_component_1.AboutComponent,
                             name: "About"
@@ -51,8 +56,7 @@ System.register(["angular2/core", "angular2/router", "./components/menu.componen
                     core_1.Component({
                         selector: "app",
                         templateUrl: "app/app.component.html",
-                        styleUrls: ["app/app.component.css"],
-                        directives: [router_1.ROUTER_DIRECTIVES, menu_component_1.MenuComponent, header_component_1.HeaderComponent]
+                        directives: [router_1.ROUTER_DIRECTIVES, header_component_1.HeaderComponent]
                     }), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);
