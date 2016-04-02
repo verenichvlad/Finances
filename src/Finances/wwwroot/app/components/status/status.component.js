@@ -18,6 +18,11 @@ System.register(["angular2/core"], function(exports_1) {
         execute: function() {
             StatusComponent = (function () {
                 function StatusComponent() {
+                    this.currentDate = new Date();
+                    this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                    this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                    this.currentDay = this.days[this.currentDate.getDay()];
+                    this.currentMonth = this.months[this.currentDate.getMonth()];
                 }
                 StatusComponent = __decorate([
                     core_1.Component({
