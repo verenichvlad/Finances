@@ -12,9 +12,11 @@ export class HeaderComponent {
 
     constructor(private _router: Router) {}
 
-    trigMenu(menu : any) {
+    trigMenu(menu: any, menuBtn : any, menuIcn : any) {
+        classie.toggle(menuBtn, 'menu-btn_toggle');
         classie.toggle(menu, 'slideout-menu__open');
-        classie.toggle(document.getElementsByTagName('body')[0], 'body__menu-open');
+        classie.toggle(menuIcn, 'glyphicon-menu-hamburger');
+        classie.toggle(menuIcn, 'glyphicon-remove');
     }
 
     navigate(routeName : string) {

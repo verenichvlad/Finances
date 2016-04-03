@@ -23,9 +23,11 @@ System.register(["angular2/core", "angular2/router"], function(exports_1) {
                 function HeaderComponent(_router) {
                     this._router = _router;
                 }
-                HeaderComponent.prototype.trigMenu = function (menu) {
+                HeaderComponent.prototype.trigMenu = function (menu, menuBtn, menuIcn) {
+                    classie.toggle(menuBtn, 'menu-btn_toggle');
                     classie.toggle(menu, 'slideout-menu__open');
-                    classie.toggle(document.getElementsByTagName('body')[0], 'body__menu-open');
+                    classie.toggle(menuIcn, 'glyphicon-menu-hamburger');
+                    classie.toggle(menuIcn, 'glyphicon-remove');
                 };
                 HeaderComponent.prototype.navigate = function (routeName) {
                     this._router.navigate([routeName]);
