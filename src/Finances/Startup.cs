@@ -1,13 +1,12 @@
 ﻿using Finances.Models;
-using Microsoft.AspNet.Authentication.Cookies;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 
 
 namespace Finances
@@ -17,7 +16,7 @@ namespace Finances
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);
 
         public Startup(IHostingEnvironment env)
-        { 
+        {
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
@@ -28,9 +27,16 @@ namespace Finances
 
         public static IConfigurationRoot Configuration { get; set; }
 
+
+
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(opt =>
+                {
+                    opt.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<FinancesContext>();
@@ -49,6 +55,9 @@ namespace Finances
 
             services.AddTransient<FinancesContextSeed>();
         }
+
+
+
 
         public async void Configure(IApplicationBuilder app,
                               IHostingEnvironment env,

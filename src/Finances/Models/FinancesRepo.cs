@@ -25,5 +25,6 @@ namespace Finances.Models
                 .OrderBy(t => t.Title)
                 .ToList();
         } 
+
     }
 }

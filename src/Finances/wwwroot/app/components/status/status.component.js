@@ -1,4 +1,4 @@
-System.register(["angular2/core"], function(exports_1) {
+System.register(["angular2/core", './../../services/http.service', './../../services/date.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,28 +8,43 @@ System.register(["angular2/core"], function(exports_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
+    var core_1, http_service_1, date_service_1;
     var StatusComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (http_service_1_1) {
+                http_service_1 = http_service_1_1;
+            },
+            function (date_service_1_1) {
+                date_service_1 = date_service_1_1;
             }],
         execute: function() {
             StatusComponent = (function () {
-                function StatusComponent() {
-                    this.currentDate = new Date();
-                    this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                    this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                    this.currentDay = this.days[this.currentDate.getDay()];
-                    this.currentMonth = this.months[this.currentDate.getMonth()];
+                function StatusComponent(_httpServ, _dateServ) {
+                    this._httpServ = _httpServ;
+                    this._dateServ = _dateServ;
+                    this.currentDay = this._dateServ.getDayName(null);
                 }
+                StatusComponent.prototype.onGetPosts = function () {
+                    var _this = this;
+                    this._httpServ.getPosts()
+                        .subscribe(function (responce) { return _this.responce = responce; });
+                };
+                StatusComponent.prototype.onPost = function (title, body) {
+                    var _this = this;
+                    this._httpServ.createPost({ title: title, body: body })
+                        .subscribe(function (resp) { return _this.responce = resp; });
+                };
                 StatusComponent = __decorate([
                     core_1.Component({
                         selector: "status",
-                        templateUrl: "app/components/status/status.html"
+                        templateUrl: "app/components/status/status.html",
+                        providers: [http_service_1.HttpService, date_service_1.DateService]
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [http_service_1.HttpService, date_service_1.DateService])
                 ], StatusComponent);
                 return StatusComponent;
             })();
