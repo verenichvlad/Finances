@@ -16,7 +16,12 @@ namespace Finances.Models
         public IEnumerable<Transaction> GetAllTransactions()
         {
             return _ctx.Transactions.OrderBy(t => t.Title).ToList();
-        } 
+        }
+
+        public Transaction GetTransactionById(int id)
+        {
+            return _ctx.Transactions.FirstOrDefault(x => x.Id == id);
+        }
 
         public IEnumerable<Transaction> GetAllTransactionsWithCategory()
         {

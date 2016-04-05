@@ -6,5 +6,6 @@ namespace Finances.Models
     {
         IEnumerable<Transaction> GetAllTransactions();
         IEnumerable<Transaction> GetAllTransactionsWithCategory();
+        Transaction GetTransactionById(int id);
     }
 }
