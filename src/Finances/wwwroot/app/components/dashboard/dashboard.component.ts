@@ -3,13 +3,13 @@ import {HttpService} from './../../services/http.service';
 
 
 @Component({
-    selector: "plan",
-    templateUrl: "app/components/plan/plan.html",
+    selector: "dashboard",
+    templateUrl: "app/components/dashboard/dashboard.html",
     providers: [HttpService]
 })
-export class PlanComponent {
+export class DashboardComponent {
     responce: string;
-    apiControllerName: string = 'plan';
+    apiControllerName: string = 'dashboard';
     
     constructor(private _httpServ: HttpService) { }
 

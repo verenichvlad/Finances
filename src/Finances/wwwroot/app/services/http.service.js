@@ -26,15 +26,15 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
                     this._http = _http;
                     this.serviceAdress = 'http://localhost:2528/api/';
                 }
-                HttpService.prototype.getPosts = function () {
-                    return this._http.get(this.serviceAdress)
+                HttpService.prototype.getPosts = function (controllerName) {
+                    return this._http.get(this.serviceAdress + controllerName)
                         .map(function (res) { return res.json(); });
                 };
-                HttpService.prototype.createPost = function (post) {
+                HttpService.prototype.createPost = function (controllerName, post) {
                     var body = JSON.stringify(post);
                     var headers = new http_2.Headers();
                     headers.append('Content-Type', 'application/x-www-urlencoded');
-                    return this._http.post(this.serviceAdress, body, {
+                    return this._http.post(this.serviceAdress + controllerName, body, {
                         headers: headers
                     }).map(function (res) { return res.json(); });
                 };

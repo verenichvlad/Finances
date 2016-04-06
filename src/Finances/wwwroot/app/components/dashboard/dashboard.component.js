@@ -1,4 +1,4 @@
-System.register(["angular2/core", './../../services/http.service', './../../services/date.service'], function(exports_1) {
+System.register(["angular2/core", './../../services/http.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,8 +8,8 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_service_1, date_service_1;
-    var StatusComponent;
+    var core_1, http_service_1;
+    var DashboardComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -17,39 +17,35 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
             },
             function (http_service_1_1) {
                 http_service_1 = http_service_1_1;
-            },
-            function (date_service_1_1) {
-                date_service_1 = date_service_1_1;
             }],
         execute: function() {
-            StatusComponent = (function () {
-                function StatusComponent(_httpServ, _dateServ) {
+            DashboardComponent = (function () {
+                function DashboardComponent(_httpServ) {
                     this._httpServ = _httpServ;
-                    this._dateServ = _dateServ;
-                    this.currentDay = this._dateServ.getDayName(null);
+                    this.apiControllerName = 'dashboard';
                 }
-                StatusComponent.prototype.onGetPosts = function () {
+                DashboardComponent.prototype.onGetPosts = function () {
                     var _this = this;
-                    this._httpServ.getPosts()
+                    this._httpServ.getPosts(this.apiControllerName)
                         .subscribe(function (responce) { return _this.responce = responce; });
                 };
-                StatusComponent.prototype.onPost = function (title, body) {
+                DashboardComponent.prototype.onPost = function (title, body) {
                     var _this = this;
-                    this._httpServ.createPost({ title: title, body: body })
+                    this._httpServ.createPost(this.apiControllerName, { title: title, body: body })
                         .subscribe(function (resp) { return _this.responce = resp; });
                 };
-                StatusComponent = __decorate([
+                DashboardComponent = __decorate([
                     core_1.Component({
-                        selector: "status",
-                        templateUrl: "app/components/status/status.html",
-                        providers: [http_service_1.HttpService, date_service_1.DateService]
+                        selector: "dashboard",
+                        templateUrl: "app/components/dashboard/dashboard.html",
+                        providers: [http_service_1.HttpService]
                     }), 
-                    __metadata('design:paramtypes', [http_service_1.HttpService, date_service_1.DateService])
-                ], StatusComponent);
-                return StatusComponent;
+                    __metadata('design:paramtypes', [http_service_1.HttpService])
+                ], DashboardComponent);
+                return DashboardComponent;
             })();
-            exports_1("StatusComponent", StatusComponent);
+            exports_1("DashboardComponent", DashboardComponent);
         }
     }
 });
-//# sourceMappingURL=status.component.js.map
+//# sourceMappingURL=dashboard.component.js.map

@@ -24,7 +24,7 @@ namespace Finances.Controllers.API
         }
 
         [HttpPost("")]
-        public JsonResult Post([FromBody] PlanViewModel plan)
+        public JsonResult Post([FromBody] object plan)
         {
             if (ModelState.IsValid)
             {

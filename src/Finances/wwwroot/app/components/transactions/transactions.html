@@ -1,0 +1,35 @@
+﻿<div class="container">
+    <h1 class="branding-header">Transactions</h1>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="alert alert-warning" colspan="4" *ngIf="transactions.length < 1">No transactions added yet!</td>            
+        </tr>
+        <tr class="transactions-table__row" *ngFor="#transaction of transactions">
+            <td>{{transaction.name}}</td>
+            <td>{{transaction.category}}</td>
+            <td>{{transaction.amount}}</td>
+            <td (click)="onRemove(transaction.id)"><button class="btn btn-danger">Remove</button> </td>
+        </tr>
+
+        <tr *ngIf="showAddForm">
+            <td><input #nameAdd type="text" placeholder="Name" class="form-control"/></td>
+            <td><input #categoryAdd type="text" placeholder="Category" class="form-control"/></td>
+            <td><input #amountAdd type="number" placeholder="Amount" class="form-control"/></td>
+            <td><button (click)="onAddOk(nameAdd.value, categoryAdd.value, amountAdd.value)" class="btn btn-success">Ok</button></td>
+        </tr>
+        </tbody>
+    </table>
+    <button *ngIf="!showAddForm" (click)="showAddForm = !showAddForm" class="btn btn-success">Add</button>
+    <button *ngIf="showAddForm" (click)="showAddForm = !showAddForm" class="btn btn-info">Exit adding</button>
+</div>

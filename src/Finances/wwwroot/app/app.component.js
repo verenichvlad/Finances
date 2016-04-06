@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router", "./components/header/header.component", "./components/status/status.component", "./components/plan/plan.component", "./components/about/about.component"], function(exports_1) {
+System.register(["angular2/core", "angular2/router", "./components/header/header.component", "./components/dashboard/dashboard.component", "./components/transactions/transactions.component", "./components/settings/settings.component", "./components/about/about.component"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(["angular2/core", "angular2/router", "./components/header/header
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, header_component_1, status_component_1, plan_component_1, about_component_1;
+    var core_1, router_1, header_component_1, dashboard_component_1, transactions_component_1, settings_component_1, about_component_1;
     var AppComponent;
     return {
         setters:[
@@ -21,11 +21,14 @@ System.register(["angular2/core", "angular2/router", "./components/header/header
             function (header_component_1_1) {
                 header_component_1 = header_component_1_1;
             },
-            function (status_component_1_1) {
-                status_component_1 = status_component_1_1;
+            function (dashboard_component_1_1) {
+                dashboard_component_1 = dashboard_component_1_1;
             },
-            function (plan_component_1_1) {
-                plan_component_1 = plan_component_1_1;
+            function (transactions_component_1_1) {
+                transactions_component_1 = transactions_component_1_1;
+            },
+            function (settings_component_1_1) {
+                settings_component_1 = settings_component_1_1;
             },
             function (about_component_1_1) {
                 about_component_1 = about_component_1_1;
@@ -37,15 +40,20 @@ System.register(["angular2/core", "angular2/router", "./components/header/header
                 AppComponent = __decorate([
                     router_1.RouteConfig([
                         {
-                            path: "/status",
-                            component: status_component_1.StatusComponent,
-                            name: "Status",
+                            path: "/dashboard",
+                            component: dashboard_component_1.DashboardComponent,
+                            name: "Dashboard",
                             useAsDefault: true
                         },
                         {
-                            path: "/plan",
-                            component: plan_component_1.PlanComponent,
-                            name: "Plan"
+                            path: "/transactions",
+                            component: transactions_component_1.TransactionsComponent,
+                            name: "Transactions"
+                        },
+                        {
+                            path: "/settings",
+                            component: settings_component_1.SettingsComponent,
+                            name: "Settings"
                         },
                         {
                             path: "/about",

@@ -35,7 +35,7 @@ namespace Finances.Models
             {
                 Title = "FebruarySaving",
                 User = await _userManager.FindByEmailAsync("verenichvlad@gmail.com"),
-                Date = DateTime.Now,
+                CreationDate = DateTime.Now,
                 Amount = 1500,
                 Category = new Category()
                 {
@@ -54,7 +54,7 @@ namespace Finances.Models
             var incTrans1 = new Transaction()
             {
                 Title = "FebruaryIncome",
-                Date = DateTime.Now,
+                CreationDate = DateTime.Now,
                 User = await _userManager.FindByEmailAsync("verenichvlad@gmail.com"),
                 Amount = 4000,
                 Category = new Category()
@@ -69,7 +69,7 @@ namespace Finances.Models
             var outTrans1 = new Transaction()
             {
                 Title = "Food",
-                Date = DateTime.Now,
+                CreationDate = DateTime.Now,
                 User = await _userManager.FindByEmailAsync("verenichvlad@gmail.com"),
                 Amount = -230,
                 Category = new Category()
@@ -84,7 +84,7 @@ namespace Finances.Models
             var outTrans2 = new Transaction()
             {
                 Title = "Tv",
-                Date = DateTime.Now,
+                CreationDate = DateTime.Now,
                 User = await _userManager.FindByEmailAsync("verenichvlad@gmail.com"),
                 Amount = -1005,
                 Category = new Category()
@@ -99,7 +99,7 @@ namespace Finances.Models
             var outTrans3 = new Transaction()
             {
                 Title = "Clothes",
-                Date = DateTime.Now,
+                CreationDate = DateTime.Now,
                 User = await _userManager.FindByEmailAsync("verenichvlad@gmail.com"),
                 Amount = -432,
                 Category = new Category()

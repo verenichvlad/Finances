@@ -15,7 +15,7 @@
         <div id="menu__account" class="menu__divider">
             <div class="user-info">
                 <i class="user-info__icon glyphicon glyphicon-user"></i>
-                <p class="user-info__name">UserName</p>
+                <p class="user-info__name">@User.Identity.Name</p>
             </div>
             <ul class="menu__utility">
                 <li>
@@ -25,11 +25,10 @@
             </ul>
         </div>
         <ul id="menu__content" class="menu__utility menu__divider">
-            <li><a (click)="navigate('Status')">Status</a></li>
-            <li><a (click)="navigate('Plan')">Plan</a></li>
-            <li><a href="#">Track expances</a></li>
-            <li><a href="#">Savings</a></li>
-            <li><a href="#">Settings</a></li>
+            <li><a (click)="navigate('Dashboard')">Dashboard</a></li>
+            <li><a (click)="navigate('Transactions')">Transactions</a></li>
+            <li><a (click)="navigate('Settings')">Settings</a></li>
+            <li><a (click)="navigate('About')">About</a></li>
         </ul>
     </nav>
 </header>

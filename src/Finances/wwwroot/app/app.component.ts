@@ -3,22 +3,28 @@ import {Router, RouteDefinition, RouteConfig, ROUTER_DIRECTIVES} from "angular2/
 
 import {HeaderComponent} from "./components/header/header.component";
 
-import {StatusComponent} from "./components/status/status.component";
-import {PlanComponent} from "./components/plan/plan.component";
+import {DashboardComponent} from "./components/dashboard/dashboard.component";
+import {TransactionsComponent} from "./components/transactions/transactions.component";
+import {SettingsComponent} from "./components/settings/settings.component";
 import {AboutComponent} from "./components/about/about.component";
 
 
 @RouteConfig([
     {
-        path: "/status",
-        component: StatusComponent,
-        name: "Status",
+        path: "/dashboard",
+        component: DashboardComponent,
+        name: "Dashboard",
         useAsDefault: true
     },
     {
-        path: "/plan",
-        component: PlanComponent,
-        name: "Plan"
+        path: "/transactions",
+        component: TransactionsComponent,
+        name: "Transactions"
+    },
+    {
+        path: "/settings",
+        component: SettingsComponent,
+        name: "Settings"
     },
     {
         path: "/about",
