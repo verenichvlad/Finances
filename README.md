@@ -1,7 +1,7 @@
 # Finances
 App for bachalor degree.
 
-## Running
+### Running
 
-Set up connection str in  appsettings.json
-Install recent version of NPM -> Restore packages (if not restored automatically)
+1. Set up connection str in  appsettings.json
+2. Install recent version of NPM -> Restore packages (if not restored automatically)
