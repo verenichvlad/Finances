@@ -121,8 +121,8 @@ a:hover {
     background: #222; }
 
 .brand {
-  text-align: center;
-  padding-top: 5px; }
+  padding-top: 5px;
+  padding-left: 350px; }
 
 .brand__txt {
   font-size: 26px;
