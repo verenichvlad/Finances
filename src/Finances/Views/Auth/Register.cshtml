@@ -1,23 +1,30 @@
-﻿@model Finances.ViewModels.LoginViewModel
+﻿@model Finances.ViewModels.RegisterViewModel
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Register";
     Layout = "_AuthLayout";
 }
+
 
 <div class="container">
     <div class="row">
         <div class="col-md-4">
             <div class="auth-form">
-                <h3>Login to <strong>Finances</strong></h3>
-                <form method="post" novalidate>
+                <h3>Create account in <strong>Finances</strong>
+                </h3>
 
+                <form method="post" novalidate>
                     <div class="text-danger" asp-validation-summary="ValidationSummary.ModelOnly"></div>
 
                     <div class="form-group">
                         <label asp-for="Username"></label>
-                        <input asp-for="Username" class="form-control" />
+                        <input asp-for="Username" class="form-control"/>
                         <span class="label label-danger center-block" asp-validation-for="Username"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span class="label label-danger center-block" asp-validation-for="Email"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Password"></label>
@@ -25,8 +32,8 @@
                         <span class="label label-danger center-block" asp-validation-for="Password"></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Login" class="btn btn-success"/>
-                        <a asp-controller="Auth" asp-action="Register" class="btn btn-warning auth-pull-right">Create account?</a>
+                        <input type="submit" value="Register" class="btn btn-success"/>
+                        <a asp-controller="Auth" asp-action="Login" class="btn btn-info auth-pull-right">Back to Login</a>
                     </div>
                 </form>
             </div>

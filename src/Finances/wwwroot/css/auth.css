@@ -7,6 +7,10 @@
   position: relative;
   top: 25vh; }
 
+.auth-pull-right {
+  position: absolute;
+  right: 43px; }
+
 .auth-form {
   padding: 5px 20px;
   margin: 5px;

@@ -11,14 +11,32 @@ namespace Finances.Models
         }
 
         public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Saving> Savings { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<Settings> Settings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connStr = Startup.Configuration["Data:FinancesContexConnection"];
             optionsBuilder.UseSqlServer(connStr);
             base.OnConfiguring(optionsBuilder);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<TransactionTagMap>()
+                .HasKey(t => new { t.TransactionId, t.TagId });
+
+            modelBuilder.Entity<TransactionTagMap>()
+                .HasOne(pt => pt.Transaction)
+                .WithMany(p => p.TransactionTagMaps)
+                .HasForeignKey(pt => pt.TransactionId);
+
+            modelBuilder.Entity<TransactionTagMap>()
+                .HasOne(pt => pt.Tag)
+                .WithMany(t => t.TransactionTagMaps)
+                .HasForeignKey(pt => pt.TagId);
         }
     }
 }

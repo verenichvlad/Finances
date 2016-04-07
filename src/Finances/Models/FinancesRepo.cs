@@ -26,7 +26,7 @@ namespace Finances.Models
         public IEnumerable<Transaction> GetAllTransactionsWithCategory()
         {
             return _ctx.Transactions
-                .Include(t => t.Category)
+                .Include(t => t.TransactionTagMaps)
                 .OrderBy(t => t.Title)
                 .ToList();
         } 
