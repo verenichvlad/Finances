@@ -24,13 +24,18 @@
 }
 
 .brand {
-    padding-top: 5px;
-    padding-left: 350px;
-}
-
-.brand__txt {
+    z-index: 9999999;
     font-size: 26px;
     text-transform: uppercase;
+    position: absolute;
+    top: 92vh;
+    left: 2vw;
+    color: rgba(25,25,25,.8);
+}
+
+.brand_menu-opened {
+    color: rgba(255, 255, 255, 0.7);
+    left: calc(150px - 65px);
 }
 
 .slideout-menu {
@@ -108,7 +113,7 @@
     color: #fefefe;
     z-index: 9999999;
 
-    &:hover{
+    &:hover {
         color: rgba(255,255,255,0.7);
     }
 }

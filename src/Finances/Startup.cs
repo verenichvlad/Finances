@@ -1,4 +1,6 @@
-﻿using Finances.Models;
+﻿using AutoMapper;
+using Finances.Models;
+using Finances.ViewModels;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity;
@@ -54,6 +56,7 @@ namespace Finances
             });
 
             services.AddTransient<FinancesContextSeed>();
+            services.AddScoped<IFinancesRepo, FinancesRepo>();
         }
 
 
@@ -67,6 +70,11 @@ namespace Finances
             app.UseIISPlatformHandler(options =>
                                       options.AuthenticationDescriptions.Clear());
             app.UseStaticFiles();
+
+            Mapper.Initialize(config =>
+            {
+                config.CreateMap<Transaction, TransactionViewModel>().ReverseMap();
+            });
 
             app.UseIdentity();
 

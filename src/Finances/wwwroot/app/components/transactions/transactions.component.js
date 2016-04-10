@@ -26,57 +26,77 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                 function TransactionsComponent(_httpServ, _dateServ) {
                     this._httpServ = _httpServ;
                     this._dateServ = _dateServ;
-                    this._apiControllerName = 'transactions';
-                    this.currentDay = this._dateServ.getDayName(null);
-                    this.transactions = [];
-                    this.transactions.push({
-                        id: 1,
-                        name: "BobTrans",
-                        category: "MyCategory",
-                        amount: -20
-                    });
-                    this.transactions.push({
-                        id: 2,
-                        name: "AnotherTrans",
-                        category: "Personal",
-                        amount: -89
-                    });
-                    this.transactions.push({
-                        id: 3,
-                        name: "Third trans",
-                        category: "Food",
-                        amount: -12
-                    });
+                    this.apiControllerName = 'transactions';
+                    this.vm = {};
+                    this.transactionTypes = [];
+                    this.isLoading = true;
+                    this.vm.transactions = [];
+                    this.vm.newTransaction = {};
                 }
-                TransactionsComponent.prototype.onRemove = function (id) {
-                    this.transactions = this.transactions
+                TransactionsComponent.prototype.ngOnInit = function () {
+                    this.onGetTransactions();
+                    this.onGetTransactionTypes();
+                };
+                TransactionsComponent.prototype.onGetTransactions = function () {
+                    var _this = this;
+                    this.isLoading = true;
+                    this._httpServ.getPosts(this.apiControllerName)
+                        .subscribe(function (responce) {
+                        _this.vm.transactions = responce;
+                        _this.isLoading = false;
+                        for (var _i = 0, _a = _this.vm.transactions; _i < _a.length; _i++) {
+                            var transaction = _a[_i];
+                            transaction.creationDate = Date.parse(transaction.creationDate);
+                        }
+                    });
+                };
+                TransactionsComponent.prototype.onGetTransactionTypes = function () {
+                    var _this = this;
+                    this.isLoading = true;
+                    this._httpServ.getPosts(this.apiControllerName + "/typesDictionary")
+                        .subscribe(function (responce) {
+                        _this.transactionTypes = responce;
+                        _this.isLoading = false;
+                    });
+                };
+                TransactionsComponent.prototype.onPostTransaction = function (vm) {
+                    var _this = this;
+                    this._httpServ.createPost(this.apiControllerName, vm)
+                        .subscribe(function (resp) {
+                        _this.postSucceeded = resp;
+                        _this.onGetTransactions();
+                    });
+                };
+                TransactionsComponent.prototype.getTransactionTypeStr = function (n) {
+                    for (var _i = 0, _a = this.transactionTypes; _i < _a.length; _i++) {
+                        var type = _a[_i];
+                        if (type.value === n) {
+                            return type.name;
+                        }
+                    }
+                    return "-";
+                };
+                TransactionsComponent.prototype.getDate = function () {
+                    return new Date();
+                };
+                TransactionsComponent.prototype.onRemoveTransaction = function (id) {
+                    this.vm.transactions = this.vm.transactions
                         .filter(function (el) {
                         return el.id !== id;
                     });
                 };
-                TransactionsComponent.prototype.onAddOk = function (name, category, amount) {
-                    var oldId;
-                    if (this.transactions[this.transactions.length - 1])
-                        oldId = this.transactions[this.transactions.length - 1].id;
-                    else
-                        oldId = 0;
-                    this.transactions.push({
-                        id: oldId + 1,
-                        name: name,
-                        category: category,
-                        amount: amount
-                    });
+                TransactionsComponent.prototype.onAddOk = function (title, amount, type) {
+                    var transaction = {
+                        id: -1,
+                        title: title,
+                        amount: amount,
+                        description: "Ordinary transaction",
+                        creationDate: new Date(),
+                        transactionType: type,
+                        tags: null
+                    };
+                    this.onPostTransaction(transaction);
                     this.showAddForm = false;
-                };
-                TransactionsComponent.prototype.onGetPosts = function () {
-                    var _this = this;
-                    this._httpServ.getPosts(this._apiControllerName)
-                        .subscribe(function (responce) { return _this._responce = responce; });
-                };
-                TransactionsComponent.prototype.onPost = function (title, body) {
-                    var _this = this;
-                    this._httpServ.createPost(this._apiControllerName, { title: title, body: body })
-                        .subscribe(function (resp) { return _this._responce = resp; });
                 };
                 TransactionsComponent = __decorate([
                     core_1.Component({

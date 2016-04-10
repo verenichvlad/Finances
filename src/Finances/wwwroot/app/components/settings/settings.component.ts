@@ -20,7 +20,7 @@ export class SettingsComponent {
     }
 
     onPost(title: string, body: string) {
-        this._httpServ.createPost(this._apiControllerName, { title: title, body: body })
+        this._httpServ.createPost(this._apiControllerName, null)
             .subscribe(resp => this._responce = resp);
     }
 }

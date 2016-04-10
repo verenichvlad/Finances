@@ -3,11 +3,12 @@ import {Http} from 'angular2/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/Rx';
 import {Headers} from 'angular2/http';
+import {Transaction} from "../components/transactions/transaction";
 
 @Injectable()
 export class HttpService {
     
-    serviceAdress: string = 'http://localhost:2528/api/';
+    private serviceAdress: string = 'http://localhost:2528/api/';
 
     constructor(private _http: Http) {}
 
@@ -16,13 +17,10 @@ export class HttpService {
             .map(res => res.json());
     }
 
-    createPost(controllerName: string, post: { title: string, body: string }): Observable<any> {
-        const body = JSON.stringify(post);
+    createPost(controllerName: string, post): Observable<any> {
         let headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-urlencoded');
-        return this._http.post(this.serviceAdress + controllerName, body, {
-            headers: headers
-        }).map(res => res.json());
+        headers.append('Content-Type', 'application/json');
+        return this._http.post(this.serviceAdress + controllerName,JSON.stringify(post),{headers: headers}).map(res => res.json());
 
     }
 }

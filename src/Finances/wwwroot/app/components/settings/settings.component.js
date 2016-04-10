@@ -31,7 +31,7 @@ System.register(["angular2/core", './../../services/http.service'], function(exp
                 };
                 SettingsComponent.prototype.onPost = function (title, body) {
                     var _this = this;
-                    this._httpServ.createPost(this._apiControllerName, { title: title, body: body })
+                    this._httpServ.createPost(this._apiControllerName, null)
                         .subscribe(function (resp) { return _this._responce = resp; });
                 };
                 SettingsComponent = __decorate([

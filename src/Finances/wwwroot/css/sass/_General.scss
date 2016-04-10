@@ -7,15 +7,15 @@
 }
 
 body {
-	font-family: 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
-	overflow: hidden;
+    font-family: 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
+    overflow: hidden;
     overflow-y: scroll;
-	margin: 0;
+    margin: 0;
     position: relative;
-	color: #111;
-    background: #fefefe!important;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+    color: #111;
+    background: #fefefe !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a:hover {
@@ -29,7 +29,7 @@ a:hover {
 }
 
 .fin-btn:focus {
-  outline: none;
+    outline: none;
 }
 
 .fin-loading-txt {
@@ -49,14 +49,29 @@ a:hover {
     height: 10px;
 }
 
+.fin-api_loading {
+    background: url(../img/status.gif);
+    height: 55px;
+    width: 55px;
+    position: absolute;
+    top: calc(100vh - 90px);
+    left: calc(100vw - 100px);
+}
+
 /*-------------------------------------------------------*/
 
 /*MEDIA QUERIES*/
 
 /*-------------------------------------------------------*/
 
-@media(max-width:767px){
+@media(max-width:767px) {
 }
-@media(min-width:768px){}
-@media(min-width:992px){}
-@media(min-width:1200px){}
+
+@media(min-width:768px) {
+}
+
+@media(min-width:992px) {
+}
+
+@media(min-width:1200px) {
+}

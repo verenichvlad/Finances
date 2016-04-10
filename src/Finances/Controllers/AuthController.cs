@@ -5,6 +5,8 @@ using Finances.ViewModels;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
+using System.Security.Claims;
+
 
 namespace Finances.Controllers
 {

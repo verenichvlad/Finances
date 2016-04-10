@@ -1,32 +1,40 @@
 ﻿<div class="container">
     <h1 class="branding-header">Transactions</h1>
 
+    <i *ngIf="isLoading" class="fin-api_loading"></i>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Category</th>
+                <th>Date</th>
+                <th>Title</th>
                 <th>Amount</th>
+                <th>Type</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
         <tr>
-            <td class="alert alert-warning" colspan="4" *ngIf="transactions.length < 1">No transactions added yet!</td>            
+            <td class="alert alert-warning" colspan="4" *ngIf="vm.transactions.length < 1">No transactions added yet!</td>
         </tr>
-        <tr class="transactions-table__row" *ngFor="#transaction of transactions">
-            <td>{{transaction.name}}</td>
-            <td>{{transaction.category}}</td>
+        <tr class="transactions-table__row" *ngFor="#transaction of vm.transactions">
+            <td>{{transaction.creationDate | date}}</td>
+            <td>{{transaction.title}}</td>
             <td>{{transaction.amount}}</td>
+            <td>{{getTransactionTypeStr(transaction.transactionType)}}</td>
             <td (click)="onRemove(transaction.id)"><button class="btn btn-danger">Remove</button> </td>
         </tr>
 
         <tr *ngIf="showAddForm">
-            <td><input #nameAdd type="text" placeholder="Name" class="form-control"/></td>
-            <td><input #categoryAdd type="text" placeholder="Category" class="form-control"/></td>
-            <td><input #amountAdd type="number" placeholder="Amount" class="form-control"/></td>
-            <td><button (click)="onAddOk(nameAdd.value, categoryAdd.value, amountAdd.value)" class="btn btn-success">Ok</button></td>
+            <td>{{getDate() | date}}</td>
+            <td><input #titleIn type="text" placeholder="Title" class="form-control"/></td>
+            <td><input #amountIn type="number" placeholder="Amount" class="form-control"/></td>
+            <td>
+                <select #typeIn class="form-control">
+                <option *ngFor="#type of transactionTypes" value="{{type.value}}">{{type.name}}</option>
+            </select>
+            </td>
+            <td><button (click)="onAddOk(titleIn.value, amountIn.value, typeIn.value)" class="btn btn-success">Ok</button></td>
         </tr>
         </tbody>
     </table>

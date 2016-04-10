@@ -1,15 +1,13 @@
 ﻿<header class="head">
+    <div class="brand" #brand>
+        Finances
+    </div>
 
     <nav class="head__navigation">
-        <button class="show-menu-btn fin-btn" (click)="trigMenu(menu,menuBtn, menuIcn)" #menuBtn>
+        <button class="show-menu-btn fin-btn" (click)="trigMenu(menu, menuBtn, menuIcn, brand)" #menuBtn>
             <i class="glyphicon glyphicon-menu-hamburger" #menuIcn></i>
         </button>
     </nav>
-
-    <div class="brand">
-        <h1 class="brand__txt">Finances</h1>
-    </div>
-
 
     <nav class="slideout-menu" #menu>
         <div id="menu__account" class="menu__divider">

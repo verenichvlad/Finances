@@ -83,6 +83,14 @@ a:hover {
   width: 40px;
   height: 10px; }
 
+.fin-api_loading {
+  background: url(../img/status.gif);
+  height: 55px;
+  width: 55px;
+  position: absolute;
+  top: calc(100vh - 90px);
+  left: calc(100vw - 100px); }
+
 /*-------------------------------------------------------*/
 /*MEDIA QUERIES*/
 /*-------------------------------------------------------*/
@@ -93,12 +101,11 @@ a:hover {
 
 .branding-header {
   font-size: 20px;
-  color: #222;
+  color: #333;
   text-align: center;
-  margin: 20px 0;
-  padding: 16px;
-  border-top: 1px solid #222;
-  border-bottom: 1px solid #222; }
+  margin-bottom: 40px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #333; }
 
 .head {
   width: 100%;
@@ -121,12 +128,17 @@ a:hover {
     background: #222; }
 
 .brand {
-  padding-top: 5px;
-  padding-left: 350px; }
-
-.brand__txt {
+  z-index: 9999999;
   font-size: 26px;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  position: absolute;
+  top: 92vh;
+  left: 2vw;
+  color: rgba(25, 25, 25, 0.8); }
+
+.brand_menu-opened {
+  color: rgba(255, 255, 255, 0.7);
+  left: calc(150px - 65px); }
 
 .slideout-menu {
   display: block;

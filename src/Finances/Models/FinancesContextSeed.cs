@@ -37,7 +37,8 @@ namespace Finances.Models
                 CreationDate = DateTime.Now,
                 User = await _userManager.FindByEmailAsync("verenichvlad@gmail.com"),
                 Amount = -230,
-                Description = "-"
+                Description = "-",
+                TransactionType = TransactionType.UserOut
             };
             _context.Transactions.Add(outTrans1);
 
