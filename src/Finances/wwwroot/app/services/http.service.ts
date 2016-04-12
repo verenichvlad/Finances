@@ -20,7 +20,13 @@ export class HttpService {
     createPost(controllerName: string, post): Observable<any> {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this._http.post(this.serviceAdress + controllerName,JSON.stringify(post),{headers: headers}).map(res => res.json());
+        return this._http.post(this.serviceAdress + controllerName,JSON.stringify(post),{headers: headers})
+            .map(res => res.json());
 
+    }
+
+    deletePost(controllerName: string, id :number): Observable<any> {
+        return this._http.delete(this.serviceAdress + controllerName + "/" + id)
+            .map(res => res.json());
     }
 }

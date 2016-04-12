@@ -27,8 +27,17 @@ namespace Finances.Models
 
         public void AddTransaction(Transaction trans, string currentUserId)
         {
-            trans.User = GetUserById(currentUserId);
-            _ctx.Transactions.Add(trans);
+            var user = GetUserById(currentUserId);
+            _ctx.Transactions.Add(new Transaction()
+            {
+                User = user,
+                TransactionType = trans.TransactionType,
+                Amount = trans.Amount,
+                Title = trans.Title,
+                CreationDate = trans.CreationDate,
+                Description = trans.Description,
+                TransactionTagMaps = trans.TransactionTagMaps
+            });
         }
 
         public User GetUserById(string userId)
@@ -39,6 +48,16 @@ namespace Finances.Models
         public bool SaveAll()
         {
             return _ctx.SaveChanges() > 0;
+        }
+
+        public bool RemoveTransaction(int id)
+        {
+            var transToRemove = _ctx.Transactions.FirstOrDefault(trans => trans.Id == id);
+
+            if (transToRemove == null) return false;
+            else _ctx.Transactions.Remove(transToRemove);
+
+            return true;
         }
     }
 }

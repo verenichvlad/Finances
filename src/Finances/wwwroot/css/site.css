@@ -125,13 +125,13 @@ a:hover {
   height: 80px; }
   .show-menu-btn:hover {
     color: #fefefe;
-    background: #222; }
+    background-color: rgba(0, 20, 20, 0.9) !important; }
 
 .brand {
   z-index: 9999999;
   font-size: 26px;
   text-transform: uppercase;
-  position: absolute;
+  position: fixed;
   top: 92vh;
   left: 2vw;
   color: rgba(25, 25, 25, 0.8); }
@@ -148,7 +148,7 @@ a:hover {
   height: 100%;
   z-index: 999999;
   width: 300px;
-  background-color: #222;
+  background-color: rgba(0, 20, 20, 0.9);
   color: #fefefe;
   right: auto;
   text-align: left; }
@@ -191,11 +191,12 @@ a:hover {
   left: 0; }
 
 .menu-btn_toggle {
-  position: absolute;
+  position: fixed;
   zoom: 0.7;
   left: 348px;
   top: 0;
   color: #fefefe;
   z-index: 9999999; }
   .menu-btn_toggle:hover {
-    color: rgba(255, 255, 255, 0.7); }
+    color: rgba(255, 255, 255, 0.7);
+    background-color: transparent !important; }

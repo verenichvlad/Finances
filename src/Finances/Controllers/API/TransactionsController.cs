@@ -24,7 +24,7 @@ namespace Finances.Controllers.API
         }
 
         [HttpGet]
-        public JsonResult GetCurrentUser()
+        public JsonResult GetCurrentTransactions()
         {
             var transactions = _repo.GetCurrentUserTransactions(User.GetUserId());
 
@@ -69,13 +69,17 @@ namespace Finances.Controllers.API
                 throw;
             }
 
-            return Json(vm);
+            return Json(null);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public JsonResult Delete(int id)
         {
+            if (_repo.RemoveTransaction(id) && _repo.SaveAll()) Response.StatusCode = (int) HttpStatusCode.OK;
+            else Response.StatusCode = (int) HttpStatusCode.ExpectationFailed;
+
+            return Json(null);
         }
     }
 }

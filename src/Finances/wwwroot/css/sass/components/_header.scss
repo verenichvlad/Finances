@@ -19,7 +19,7 @@
 
     &:hover {
         color: #fefefe;
-        background: #222;
+        background-color: rgba(0,20,20,.9)!important;
     }
 }
 
@@ -27,7 +27,7 @@
     z-index: 9999999;
     font-size: 26px;
     text-transform: uppercase;
-    position: absolute;
+    position: fixed;
     top: 92vh;
     left: 2vw;
     color: rgba(25,25,25,.8);
@@ -46,7 +46,7 @@
     height: 100%;
     z-index: 999999;
     width: 300px;
-    background-color: #222;
+    background-color: rgba(0,20,20,.9);
     color: #fefefe;
     right: auto;
     text-align: left;
@@ -106,7 +106,7 @@
 }
 
 .menu-btn_toggle {
-    position: absolute;
+    position: fixed;
     zoom: 0.7;
     left: 348px;
     top: 0;
@@ -115,5 +115,6 @@
 
     &:hover {
         color: rgba(255,255,255,0.7);
+        background-color: transparent!important;
     }
 }

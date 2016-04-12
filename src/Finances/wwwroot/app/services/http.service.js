@@ -33,7 +33,12 @@ System.register(['angular2/core', 'angular2/http', 'rxjs/Rx'], function(exports_
                 HttpService.prototype.createPost = function (controllerName, post) {
                     var headers = new http_2.Headers();
                     headers.append('Content-Type', 'application/json');
-                    return this._http.post(this.serviceAdress + controllerName, JSON.stringify(post), { headers: headers }).map(function (res) { return res.json(); });
+                    return this._http.post(this.serviceAdress + controllerName, JSON.stringify(post), { headers: headers })
+                        .map(function (res) { return res.json(); });
+                };
+                HttpService.prototype.deletePost = function (controllerName, id) {
+                    return this._http.delete(this.serviceAdress + controllerName + "/" + id)
+                        .map(function (res) { return res.json(); });
                 };
                 HttpService = __decorate([
                     core_1.Injectable(), 

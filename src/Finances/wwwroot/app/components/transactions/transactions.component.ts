@@ -15,7 +15,7 @@ export class TransactionsComponent implements OnInit{
     private apiControllerName: string = 'transactions';
     private vm: any = {};
     private transactionTypes = [];
-    private isLoading : boolean = true;
+    private isLoading : boolean = false;
 
     private showAddForm: boolean;
     private postSucceeded : boolean;
@@ -54,7 +54,17 @@ export class TransactionsComponent implements OnInit{
 
 
     onPostTransaction(vm: Transaction) {
+        this.isLoading = true;
         this._httpServ.createPost(this.apiControllerName, vm)
+            .subscribe(resp => {
+                this.postSucceeded = resp;
+                this.onGetTransactions();
+            });
+    }
+
+    onRemoveTransaction(id: number) {
+        this.isLoading = true;
+        this._httpServ.deletePost(this.apiControllerName, id)
             .subscribe(resp => {
                 this.postSucceeded = resp;
                 this.onGetTransactions();
@@ -67,7 +77,6 @@ export class TransactionsComponent implements OnInit{
                 return type.name;
             }
         }
-
         return "-";
     }
 
@@ -75,12 +84,6 @@ export class TransactionsComponent implements OnInit{
         return new Date();
     }
 
-    onRemoveTransaction(id: number) {
-        this.vm.transactions = this.vm.transactions
-            .filter(function (el) {
-                return el.id !== id;
-            });
-    }
 
     onAddOk(title: string, amount: number, type: number) {
         var transaction : Transaction = {

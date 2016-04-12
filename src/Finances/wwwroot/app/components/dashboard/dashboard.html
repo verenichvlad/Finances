@@ -1,120 +1,18 @@
-﻿
-
-<!--TODO Zrobić Panele-->
-
-<div class="container">
-
-
-
-
+﻿<div class="container">
     <h1 class="branding-header">Dashboard</h1>
 
-    <p>Here you'll setup your plan for following month</p>
+    <p class="alert alert-warning">Here you can see your expances and incomes status</p>
 
-    <h3>Everyday expances</h3>
-    <div class="form-group">
-        <label for="daily">How much will you spend daily?</label>
-        <input type="number" class="form-control" id="daily">
-    </div>
+    <base-chart class="chart"
+                [data]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [series]="barChartSeries"
+                [legend]="barChartLegend"
+                [series]="barChartSeries"
+                [chartType]="barChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)">
+    </base-chart>
 
-    <hr/>
-
-
-    <h3>Cycle expances</h3>
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>What?</th>
-                <th>How much?</th>
-                <th>Period</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr>
-                <td>Gym</td>
-                <td>500</td>
-                <td>Mothly</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <h4>Add new expance</h4>
-
-    <div class="form-group">
-        <label for="cycleExpWhat">What do you need?</label>
-        <input type="text" class="form-control" id="cycleExpWhat">
-    </div>
-
-    <div class="form-group">
-        <label for="cycleExpHowMuch">How much?</label>
-        <input type="number" class="form-control" id="cycleExpHowMuch">
-    </div>
-
-    <div class="form-group">
-        <label>Period:</label>
-        <select class="form-control">
-            <option value="volvo">Daily</option>
-            <option value="opel">Weekly</option>
-            <option value="saab">Monthly</option>
-        </select>
-    </div>
-
-    <input class="btn" type="button" value="Add"/>
-
-
-    <hr/>
-
-
-    <h3>Plan extra expance</h3>
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>What?</th>
-                <th>How much?</th>
-                <th>This month only</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <tr>
-                <td>Apple Laptop</td>
-                <td>9000</td>
-                <td><input type="checkbox"/></td>
-            </tr>
-            <tr>
-                <td>Citroen c5</td>
-                <td>18000</td>
-                <td><input type="checkbox"/></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <h4>Add new expance</h4>
-
-    <div class="form-group">
-        <label for="extraExpWhat">What do you need?</label>
-        <input type="text" class="form-control" id="extraExpWhat">
-    </div>
-
-    <div class="form-group">
-        <label for="extraExpHowMuch">How much?</label>
-        <input type="number" class="form-control" id="extraExpHowMuch">
-    </div>
-
-    <div class="form-group">
-        <label for="extraExpThisMonthOnly">Multiple payments?</label>
-        <input type="checkbox" class="form-control" id="extraExpThisMonthOnly">
-    </div>
-
-    <input class="btn" type="button" value="Add"/>
-
-
-
-
-
-    <input class="btn" type="button" value="Submit" (click)="submitPlanForm()"/>
 </div>

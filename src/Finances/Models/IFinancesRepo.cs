@@ -8,5 +8,6 @@ namespace Finances.Models
         void AddTransaction(Transaction trans, string currentUserId);
         bool SaveAll();
         User GetUserById(string currentUserId);
+        bool RemoveTransaction(int id);
     }
 }

@@ -29,7 +29,7 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                     this.apiControllerName = 'transactions';
                     this.vm = {};
                     this.transactionTypes = [];
-                    this.isLoading = true;
+                    this.isLoading = false;
                     this.vm.transactions = [];
                     this.vm.newTransaction = {};
                 }
@@ -61,7 +61,17 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                 };
                 TransactionsComponent.prototype.onPostTransaction = function (vm) {
                     var _this = this;
+                    this.isLoading = true;
                     this._httpServ.createPost(this.apiControllerName, vm)
+                        .subscribe(function (resp) {
+                        _this.postSucceeded = resp;
+                        _this.onGetTransactions();
+                    });
+                };
+                TransactionsComponent.prototype.onRemoveTransaction = function (id) {
+                    var _this = this;
+                    this.isLoading = true;
+                    this._httpServ.deletePost(this.apiControllerName, id)
                         .subscribe(function (resp) {
                         _this.postSucceeded = resp;
                         _this.onGetTransactions();
@@ -78,12 +88,6 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                 };
                 TransactionsComponent.prototype.getDate = function () {
                     return new Date();
-                };
-                TransactionsComponent.prototype.onRemoveTransaction = function (id) {
-                    this.vm.transactions = this.vm.transactions
-                        .filter(function (el) {
-                        return el.id !== id;
-                    });
                 };
                 TransactionsComponent.prototype.onAddOk = function (title, amount, type) {
                     var transaction = {
