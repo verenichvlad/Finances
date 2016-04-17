@@ -1,4 +1,4 @@
-System.register(["angular2/core", './../../services/http.service', './../../services/date.service'], function(exports_1) {
+System.register(["angular2/core", "angular2/common", './../../services/http.service', './../../services/date.service', "../file-upload/ng2-file-upload"], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,28 +8,37 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_service_1, date_service_1;
-    var TransactionsComponent;
+    var core_1, common_1, http_service_1, date_service_1, ng2_file_upload_1;
+    var API_CONTROLLER_NAME, URL, TransactionsComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
             },
             function (http_service_1_1) {
                 http_service_1 = http_service_1_1;
             },
             function (date_service_1_1) {
                 date_service_1 = date_service_1_1;
+            },
+            function (ng2_file_upload_1_1) {
+                ng2_file_upload_1 = ng2_file_upload_1_1;
             }],
         execute: function() {
+            API_CONTROLLER_NAME = 'transactions';
+            URL = 'http://localhost:2528/api/' + API_CONTROLLER_NAME + "/upload";
             TransactionsComponent = (function () {
                 function TransactionsComponent(_httpServ, _dateServ) {
                     this._httpServ = _httpServ;
                     this._dateServ = _dateServ;
-                    this.apiControllerName = 'transactions';
                     this.vm = {};
                     this.transactionTypes = [];
                     this.isLoading = false;
+                    this.uploader = new ng2_file_upload_1.FileUploader({ url: URL });
+                    this.hasBaseDropZoneOver = false;
                     this.vm.transactions = [];
                     this.vm.newTransaction = {};
                 }
@@ -40,7 +49,7 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                 TransactionsComponent.prototype.onGetTransactions = function () {
                     var _this = this;
                     this.isLoading = true;
-                    this._httpServ.getPosts(this.apiControllerName)
+                    this._httpServ.getPosts(API_CONTROLLER_NAME)
                         .subscribe(function (responce) {
                         _this.vm.transactions = responce;
                         _this.isLoading = false;
@@ -53,7 +62,7 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                 TransactionsComponent.prototype.onGetTransactionTypes = function () {
                     var _this = this;
                     this.isLoading = true;
-                    this._httpServ.getPosts(this.apiControllerName + "/typesDictionary")
+                    this._httpServ.getPosts(API_CONTROLLER_NAME + "/typesDictionary")
                         .subscribe(function (responce) {
                         _this.transactionTypes = responce;
                         _this.isLoading = false;
@@ -62,7 +71,7 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                 TransactionsComponent.prototype.onPostTransaction = function (vm) {
                     var _this = this;
                     this.isLoading = true;
-                    this._httpServ.createPost(this.apiControllerName, vm)
+                    this._httpServ.createPost(API_CONTROLLER_NAME, vm)
                         .subscribe(function (resp) {
                         _this.postSucceeded = resp;
                         _this.onGetTransactions();
@@ -71,7 +80,7 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                 TransactionsComponent.prototype.onRemoveTransaction = function (id) {
                     var _this = this;
                     this.isLoading = true;
-                    this._httpServ.deletePost(this.apiControllerName, id)
+                    this._httpServ.deletePost(API_CONTROLLER_NAME, id)
                         .subscribe(function (resp) {
                         _this.postSucceeded = resp;
                         _this.onGetTransactions();
@@ -102,11 +111,15 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                     this.onPostTransaction(transaction);
                     this.showAddForm = false;
                 };
+                TransactionsComponent.prototype.fileOverBase = function (e) {
+                    this.hasBaseDropZoneOver = e;
+                };
                 TransactionsComponent = __decorate([
                     core_1.Component({
                         selector: "transactions",
                         templateUrl: "app/components/transactions/transactions.html",
-                        providers: [http_service_1.HttpService, date_service_1.DateService]
+                        providers: [http_service_1.HttpService, date_service_1.DateService],
+                        directives: [ng2_file_upload_1.FILE_UPLOAD_DIRECTIVES, common_1.NgClass, common_1.NgStyle, common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [http_service_1.HttpService, date_service_1.DateService])
                 ], TransactionsComponent);

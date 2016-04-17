@@ -1,14 +1,12 @@
 ﻿import {Component} from "angular2/core";
 import {HttpService} from './../../services/http.service';
 import {DateService} from './../../services/date.service';
-import {CHART_DIRECTIVES} from '../charts/charts.ts';
-import {BaseChart, Charts} from "../charts/charts";
+import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass} from 'angular2/common';
 
 @Component({
     selector: "dashboard",
     templateUrl: "app/components/dashboard/dashboard.html",
-    providers: [HttpService, DateService],
-    directives: [BaseChart, Charts]
+    providers: [HttpService, DateService]
 })
 export class DashboardComponent {
     responce: string;

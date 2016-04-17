@@ -1,23 +1,29 @@
-﻿import {Component} from "angular2/core";
+﻿import {Component, OnInit} from "angular2/core";
+import {NgClass, NgStyle, CORE_DIRECTIVES, FORM_DIRECTIVES} from "angular2/common"
 import {HttpService} from './../../services/http.service';
 import {DateService} from './../../services/date.service';
-import {OnInit} from "angular2/core";
 import {Transaction} from "./transaction";
-import {serializeTransitionEvent} from "angular2/src/web_workers/ui/event_serializer";
+import {FILE_UPLOAD_DIRECTIVES, FileUploader} from "../file-upload/ng2-file-upload";
+
+
+const API_CONTROLLER_NAME = 'transactions';
+const URL = 'http://localhost:2528/api/' + API_CONTROLLER_NAME + "/upload";
 
 
 @Component({
     selector: "transactions",
     templateUrl: "app/components/transactions/transactions.html",
-    providers: [HttpService, DateService]
+    providers: [HttpService, DateService],
+    directives: [FILE_UPLOAD_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES, FORM_DIRECTIVES]
 })
+
 export class TransactionsComponent implements OnInit{
-    private apiControllerName: string = 'transactions';
     private vm: any = {};
     private transactionTypes = [];
     private isLoading : boolean = false;
 
     private showAddForm: boolean;
+    private showDropZone : boolean;
     private postSucceeded : boolean;
 
     constructor(private _httpServ: HttpService, private _dateServ: DateService) {
@@ -32,7 +38,7 @@ export class TransactionsComponent implements OnInit{
 
     onGetTransactions() {
         this.isLoading = true;
-        this._httpServ.getPosts(this.apiControllerName)
+        this._httpServ.getPosts(API_CONTROLLER_NAME)
             .subscribe(responce => {
                 this.vm.transactions = responce;
                 this.isLoading = false;
@@ -45,7 +51,7 @@ export class TransactionsComponent implements OnInit{
 
     onGetTransactionTypes() {
         this.isLoading = true;
-        this._httpServ.getPosts(this.apiControllerName + "/typesDictionary")
+        this._httpServ.getPosts(API_CONTROLLER_NAME + "/typesDictionary")
             .subscribe(responce => {
                 this.transactionTypes = responce;
                 this.isLoading = false;
@@ -55,7 +61,7 @@ export class TransactionsComponent implements OnInit{
 
     onPostTransaction(vm: Transaction) {
         this.isLoading = true;
-        this._httpServ.createPost(this.apiControllerName, vm)
+        this._httpServ.createPost(API_CONTROLLER_NAME, vm)
             .subscribe(resp => {
                 this.postSucceeded = resp;
                 this.onGetTransactions();
@@ -64,7 +70,7 @@ export class TransactionsComponent implements OnInit{
 
     onRemoveTransaction(id: number) {
         this.isLoading = true;
-        this._httpServ.deletePost(this.apiControllerName, id)
+        this._httpServ.deletePost(API_CONTROLLER_NAME, id)
             .subscribe(resp => {
                 this.postSucceeded = resp;
                 this.onGetTransactions();
@@ -99,5 +105,13 @@ export class TransactionsComponent implements OnInit{
         this.onPostTransaction(transaction);
 
         this.showAddForm = false;
+    }
+
+
+    private uploader :FileUploader = new FileUploader({url: URL});
+    private hasBaseDropZoneOver:boolean = false;
+
+    private fileOverBase(e:any) {
+        this.hasBaseDropZoneOver = e;
     }
 }

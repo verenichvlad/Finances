@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using AutoMapper;
 using Finances.Models;
@@ -8,6 +9,10 @@ using Microsoft.AspNet.Mvc;
 using System.Security.Claims;
 using Microsoft.AspNet.Authorization;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Http;
+using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json;
 
 namespace Finances.Controllers.API
@@ -17,10 +22,12 @@ namespace Finances.Controllers.API
     public class TransactionsController : Controller
     {
         private readonly IFinancesRepo _repo;
+        private readonly IHostingEnvironment _environment;
 
-        public TransactionsController(IFinancesRepo repo)
+        public TransactionsController(IFinancesRepo repo, IHostingEnvironment env)
         {
             _repo = repo;
+            _environment = env;
         }
 
         [HttpGet]
@@ -69,6 +76,23 @@ namespace Finances.Controllers.API
                 throw;
             }
 
+            return Json(null);
+        }
+
+        [HttpPost("upload")]
+        public async Task<JsonResult> Upload()
+        {
+            var files = Request.Form.Files;
+
+            var uploads = Path.Combine(_environment.WebRootPath, "uploads");
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    await file.SaveAsAsync(Path.Combine(uploads, fileName));
+                }
+            }
             return Json(null);
         }
 
