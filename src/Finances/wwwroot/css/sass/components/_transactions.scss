@@ -6,9 +6,19 @@
     background: #5bc0de;
     text-align: center;
     position: relative;
+
     &:hover {
         cursor: pointer;
+        -webkit-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.75);
+        -moz-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.75);
+        box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.75);
     }
+}
+
+.nv-file-over {
+    -webkit-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 11px 0px rgba(0,0,0,0.75);
 }
 
 .dropzone__icon {

@@ -7,40 +7,67 @@ namespace Finances.Services
 {
     public class TransactionImportService
     {
-        public List<Transaction> ImportTransactions()
+        private IImportStrategy strategy;
+
+        public List<Transaction> ImportTransactions(string fileName)
         {
+            string fileBody = "";
+
+            switch (Path.GetExtension(fileName))
+            {
+                case ".csv": strategy = new CsvImportStrategy(fileBody); break;
+                case ".txt": strategy = new TxtImportStrategy(fileBody); break;
+                case "mail": strategy = new EMailImportStrategy(fileBody); break;
+                default: strategy = new CsvImportStrategy(fileBody);break;
+            }
+
+
             return null;
         }
     }
-
-
-
 
     public interface IImportStrategy
     {
         List<Transaction> Import();
     }
 
-    /// <summary>
-    /// The 'Strategy' abstract class
-    /// </summary>
-    public abstract class ImportStrategy : IImportStrategy
+    public class TxtImportStrategy : IImportStrategy
     {
-        public abstract List<Transaction> Import();
-    }
-
-    /// <summary>
-    /// CSVImportStrategy
-    /// </summary>
-    public class CSVImportStrategy : ImportStrategy
-    {
-        public string FIleCSV { get; private set; }
-        public CSVImportStrategy(string fileCSV)
+        public TxtImportStrategy(string fileTxt)
         {
-            FIleCSV = fileCSV;
+            
         }
 
-        public override List<Transaction> Import()
+        public List<Transaction> Import()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class EMailImportStrategy : IImportStrategy
+    {
+        public EMailImportStrategy(string mail)
+        {
+
+        }
+
+        public List<Transaction> Import()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
+    public class CsvImportStrategy : IImportStrategy
+    {
+        public string FileCsv { get; private set; }
+
+        public CsvImportStrategy(string fileCsv)
+        {
+            FileCsv = fileCsv;
+        }
+
+        public List<Transaction> Import()
         {
             //   0                  1                2            3       4               5            6       7
             //"#Data operacji;#Data księgowania;#Opis operacji;#Tytuł;#Nadawca/Odbiorca;#Numer konta;#Kwota;#Saldo po operacji;
@@ -51,7 +78,7 @@ namespace Finances.Services
             //2016 - 04 - 10; 2016 - 04 - 10; PRZELEW ZEWNĘTRZNY WYCHODZĄCY; "PRZELEW ŚRODKÓW"; "IAROSLAV SADOVSKI  "; '30105000031000000000121684'; -300,00; 19,84;
             //2016 - 04 - 12; 2016 - 04 - 13; OPŁATA ZA KARTĘ; "4056 XXXX XXXX 6533"; "  "; ''; -6,00; 13,84;
 
-            string[] line = File.ReadAllLines(FIleCSV);
+            string[] line = File.ReadAllLines(FileCsv);
             List<string> lineTransaction = new List<string>();
             bool findLineHeaders = false;
             for (int i = 0; i < line.Length; i++)
@@ -97,30 +124,6 @@ namespace Finances.Services
                     return TransactionType.UserOut;
             }
             throw new Exception("Error cast TransactionType.");
-        }
-    }
-
-    /// <summary>
-    /// A 'ConcreteStrategy' class
-    /// </summary>
-    public class ConcreteStrategyB : ImportStrategy
-    {
-        public override List<Transaction> Import()
-        {
-            Console.WriteLine("Called ConcreteStrategyB.AlgorithmInterface()");
-            return null;
-        }
-    }
-
-    /// <summary>
-    /// A 'ConcreteStrategy' class
-    /// </summary>
-    public class ConcreteStrategyC : ImportStrategy
-    {
-        public override List<Transaction> Import()
-        {
-            Console.WriteLine("Called ConcreteStrategyC.AlgorithmInterface()");
-            return null;
         }
     }
 }

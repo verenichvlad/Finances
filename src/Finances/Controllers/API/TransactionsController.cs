@@ -80,7 +80,7 @@ namespace Finances.Controllers.API
         }
 
         [HttpPost("upload")]
-        public async Task<JsonResult> Upload()
+        public JsonResult Upload()
         {
             var files = Request.Form.Files;
 
@@ -90,7 +90,8 @@ namespace Finances.Controllers.API
                 if (file.Length > 0)
                 {
                     var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    await file.SaveAsAsync(Path.Combine(uploads, fileName));
+                    file.SaveAs(Path.Combine(uploads, fileName));
+
                 }
             }
             return Json(null);
