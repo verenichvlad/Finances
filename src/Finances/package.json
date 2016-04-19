@@ -12,8 +12,8 @@
     "zone.js": "~0.6.4",
     "jquery": "~2.2.2",
     "feather": "~0.0.6",
-    "primeng": "1.0.0-beta.1",
-    "ng2-file-upload": "1.0.0-beta.1"
+    "ng2-file-upload": "1.0.0-beta.1",
+    "ng2-charts": "1.0.3"
   },
   "devDependencies": {
     "gulp": "3.8.11",

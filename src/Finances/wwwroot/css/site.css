@@ -204,6 +204,11 @@ a:hover {
     color: rgba(255, 255, 255, 0.7);
     background-color: transparent !important; }
 
+.dashboard-chart {
+  display: block;
+  width: 1000px;
+  height: 500px; }
+
 .dropzone {
   display: block;
   width: 100%;
@@ -234,3 +239,12 @@ a:hover {
   position: absolute;
   bottom: 10px;
   left: 10px; }
+
+.tech-img {
+  width: 150px; }
+
+.about-section-heading {
+  margin: 40px auto; }
+
+.technologies-section {
+  margin-left: 50px; }
