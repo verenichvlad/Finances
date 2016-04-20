@@ -5,7 +5,6 @@ import {DateService} from './../../services/date.service';
 import {Transaction} from "./transaction";
 import {FILE_UPLOAD_DIRECTIVES, FileUploader} from "../file-upload/ng2-file-upload";
 
-
 const API_CONTROLLER_NAME = 'transactions';
 const URL = 'http://localhost:2528/api/' + API_CONTROLLER_NAME + "/upload";
 
@@ -29,6 +28,8 @@ export class TransactionsComponent implements OnInit{
     constructor(private _httpServ: HttpService, private _dateServ: DateService) {
         this.vm.transactions = [];
         this.vm.newTransaction = {};
+
+        this.uploader.UploadCompleted.on((res) => this.onGetTransactions());
     }
 
     ngOnInit():any {
@@ -107,8 +108,8 @@ export class TransactionsComponent implements OnInit{
         this.showAddForm = false;
     }
 
-
     private uploader :FileUploader = new FileUploader({url: URL});
+
     private hasBaseDropZoneOver:boolean = false;
 
     private fileOverBase(e:any) {

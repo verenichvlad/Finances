@@ -7,6 +7,7 @@ import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {TransactionsComponent} from "./components/transactions/transactions.component";
 import {SettingsComponent} from "./components/settings/settings.component";
 import {AboutComponent} from "./components/about/about.component";
+import {PlanComponent} from "./components/plan/plan.component";
 
 
 @RouteConfig([
@@ -30,6 +31,11 @@ import {AboutComponent} from "./components/about/about.component";
         path: "/about",
         component: AboutComponent,
         name: "About"
+    },
+    {
+        path: "/plan",
+        component: PlanComponent,
+        name: "Plan"
     }
 ])
 

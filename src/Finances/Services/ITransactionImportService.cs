@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Finances.Models;
 
 namespace Finances.Services
 {
-    interface ITransactionImportService
+    public interface ITransactionImportService
     {
+        bool ImportTransactions(string fileName, User user);
     }
 }

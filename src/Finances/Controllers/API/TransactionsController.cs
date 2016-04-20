@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.AspNet.Authorization;
 using System.Linq;
 using System.Threading.Tasks;
+using Finances.Services;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.Net.Http.Headers;
@@ -23,11 +24,13 @@ namespace Finances.Controllers.API
     {
         private readonly IFinancesRepo _repo;
         private readonly IHostingEnvironment _environment;
+        private readonly ITransactionImportService _transactionImportService;
 
-        public TransactionsController(IFinancesRepo repo, IHostingEnvironment env)
+        public TransactionsController(IFinancesRepo repo, IHostingEnvironment env, ITransactionImportService transactionImportService)
         {
             _repo = repo;
             _environment = env;
+            _transactionImportService = transactionImportService;
         }
 
         [HttpGet]
@@ -83,18 +86,19 @@ namespace Finances.Controllers.API
         public JsonResult Upload()
         {
             var files = Request.Form.Files;
-
             var uploads = Path.Combine(_environment.WebRootPath, "uploads");
+            var user = _repo.GetUserById(User.GetUserId());
+
             foreach (var file in files)
             {
                 if (file.Length > 0)
                 {
                     var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                     file.SaveAs(Path.Combine(uploads, fileName));
-
+                    if (!_transactionImportService.ImportTransactions(fileName, user)) return Json(false);
                 }
             }
-            return Json(null);
+            return Json(true);
         }
 
         // DELETE api/values/5

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Finances.Models;
+using Finances.Services;
 using Finances.ViewModels;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
@@ -57,6 +58,7 @@ namespace Finances
 
             services.AddTransient<FinancesContextSeed>();
             services.AddScoped<IFinancesRepo, FinancesRepo>();
+            services.AddTransient<ITransactionImportService, TransactionImportService>();
         }
 
 

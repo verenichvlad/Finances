@@ -24,15 +24,15 @@ System.register(["angular2/core", './../../services/http.service'], function(exp
                     this._httpServ = _httpServ;
                     this._apiControllerName = 'settings';
                 }
-                SettingsComponent.prototype.onGetPosts = function () {
-                    var _this = this;
-                    this._httpServ.getPosts(this._apiControllerName)
-                        .subscribe(function (responce) { return _this._responce = responce; });
-                };
                 SettingsComponent.prototype.onPost = function (title, body) {
                     var _this = this;
                     this._httpServ.createPost(this._apiControllerName, null)
-                        .subscribe(function (resp) { return _this._responce = resp; });
+                        .subscribe(function (resp) { return _this._resp = resp; });
+                };
+                SettingsComponent.prototype.getUserData = function () {
+                    var _this = this;
+                    this._httpServ.getPosts(this._apiControllerName)
+                        .subscribe(function (responce) { return _this.user = responce; });
                 };
                 SettingsComponent = __decorate([
                     core_1.Component({

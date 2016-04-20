@@ -59,5 +59,11 @@ namespace Finances.Models
 
             return true;
         }
+
+        public void AddTransactions(List<Transaction> transactions)
+        {
+            foreach (var transaction in transactions) _ctx.Transactions.Add(transaction);
+
+        }
     }
 }

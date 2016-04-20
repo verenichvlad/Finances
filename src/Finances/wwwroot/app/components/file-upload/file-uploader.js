@@ -1,5 +1,5 @@
-System.register(['./file-like-object', './file-item'], function(exports_1) {
-    var file_like_object_1, file_item_1;
+System.register(['./file-like-object', './file-item', "./../../helpers/LiteEvent"], function(exports_1) {
+    var file_like_object_1, file_item_1, LiteEvent_1;
     var FileUploader;
     function isFile(value) {
         return (File && value instanceof File);
@@ -14,6 +14,9 @@ System.register(['./file-like-object', './file-item'], function(exports_1) {
             },
             function (file_item_1_1) {
                 file_item_1 = file_item_1_1;
+            },
+            function (LiteEvent_1_1) {
+                LiteEvent_1 = LiteEvent_1_1;
             }],
         execute: function() {
             FileUploader = (function () {
@@ -27,6 +30,7 @@ System.register(['./file-like-object', './file-item'], function(exports_1) {
                     this.removeAfterUpload = false;
                     this._nextIndex = 0;
                     this.filters = [];
+                    this.onUploadComplete = new LiteEvent_1.LiteEvent();
                     // Object.assign(this, options);
                     this.url = options.url;
                     this.authToken = options.authToken;
@@ -149,7 +153,13 @@ System.register(['./file-like-object', './file-item'], function(exports_1) {
                 };
                 FileUploader.prototype.onCompleteItem = function (item, response, status, headers) {
                 };
+                Object.defineProperty(FileUploader.prototype, "UploadCompleted", {
+                    get: function () { return this.onUploadComplete; },
+                    enumerable: true,
+                    configurable: true
+                });
                 FileUploader.prototype.onCompleteAll = function () {
+                    this.onUploadComplete.trigger(true);
                 };
                 FileUploader.prototype._getTotalProgress = function (value) {
                     if (value === void 0) { value = 0; }

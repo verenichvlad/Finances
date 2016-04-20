@@ -8,19 +8,21 @@ import {HttpService} from './../../services/http.service';
     providers: [HttpService]
 })
 export class SettingsComponent {
-    private _responce: string;
     private _apiControllerName: string = 'settings';
+    private _resp : any;
+    private user: any;
 
 
     constructor(private _httpServ: HttpService) { }
 
-    onGetPosts() {
-        this._httpServ.getPosts(this._apiControllerName)
-            .subscribe(responce => this._responce = responce);
-    }
 
     onPost(title: string, body: string) {
         this._httpServ.createPost(this._apiControllerName, null)
-            .subscribe(resp => this._responce = resp);
+            .subscribe(resp => this._resp = resp);
+    }
+
+    getUserData() {
+        this._httpServ.getPosts(this._apiControllerName)
+            .subscribe(responce => this.user = responce);
     }
 }

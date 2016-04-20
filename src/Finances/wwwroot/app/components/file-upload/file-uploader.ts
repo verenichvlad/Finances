@@ -1,5 +1,7 @@
 import {FileLikeObject} from './file-like-object';
 import {FileItem} from './file-item';
+import {LiteEvent} from "./../../helpers/LiteEvent";
+import {ILiteEvent} from "./../../helpers/ILiteEvent";
 
 function isFile(value:any) {
   return (File && value instanceof File);
@@ -181,8 +183,12 @@ export class FileUploader {
   public onCompleteItem(item:any, response:any, status:any, headers:any) {
   }
 
-  public onCompleteAll() {
-  }
+   private onUploadComplete = new LiteEvent<boolean>();
+   public get UploadCompleted(): ILiteEvent<boolean> { return this.onUploadComplete; }
+
+    public onCompleteAll() {
+        this.onUploadComplete.trigger(true);
+    }
 
   private _getTotalProgress(value = 0) {
     if (this.removeAfterUpload) {

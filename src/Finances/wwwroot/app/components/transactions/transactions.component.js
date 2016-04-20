@@ -32,6 +32,7 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
             URL = 'http://localhost:2528/api/' + API_CONTROLLER_NAME + "/upload";
             TransactionsComponent = (function () {
                 function TransactionsComponent(_httpServ, _dateServ) {
+                    var _this = this;
                     this._httpServ = _httpServ;
                     this._dateServ = _dateServ;
                     this.vm = {};
@@ -41,6 +42,7 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
                     this.hasBaseDropZoneOver = false;
                     this.vm.transactions = [];
                     this.vm.newTransaction = {};
+                    this.uploader.UploadCompleted.on(function (res) { return _this.onGetTransactions(); });
                 }
                 TransactionsComponent.prototype.ngOnInit = function () {
                     this.onGetTransactions();
