@@ -37,6 +37,15 @@ System.register(['angular2/core'], function(exports_1) {
                         return this.days[date.getMonth()];
                     }
                 };
+                DateService.prototype.getDaysAmountInMonth = function (month, year, isZeroBased) {
+                    if (isZeroBased)
+                        --month;
+                    return new Date(year, month, 0).getDate();
+                };
+                DateService.prototype.getDaysAmountInCurrentMonth = function () {
+                    var d = new Date();
+                    return new Date(d.getMonth(), d.getFullYear(), 0).getDate();
+                };
                 DateService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [])

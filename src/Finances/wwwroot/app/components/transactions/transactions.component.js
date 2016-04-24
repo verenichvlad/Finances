@@ -41,7 +41,6 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
                     this.uploader = new ng2_file_upload_1.FileUploader({ url: URL });
                     this.hasBaseDropZoneOver = false;
                     this.vm.transactions = [];
-                    this.vm.newTransaction = {};
                     this.uploader.UploadCompleted.on(function (res) { return _this.onGetTransactions(); });
                 }
                 TransactionsComponent.prototype.ngOnInit = function () {

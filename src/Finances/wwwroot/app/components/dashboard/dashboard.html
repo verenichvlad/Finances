@@ -3,16 +3,68 @@
 
     <p class="alert alert-warning">Here you can see your expances and incomes status</p>
 
-    <base-chart class="dashboard-chart"
-                [data]="barChartData"
-                [labels]="barChartLabels"
-                [options]="barChartOptions"
-                [series]="barChartSeries"
-                [legend]="barChartLegend"
-                [series]="barChartSeries"
-                [chartType]="barChartType"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)">
-    </base-chart>
+    <div class="period-container">
+        <span>Choose period: </span>
+        <div class="btn-group">
+            <button (click)="onShowPanel('day')" type="button" class="btn btn-danger">Day view</button>
+            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a (click)="onShowPanel('week')">Week view</a></li>
+                <li><a (click)="onShowPanel('month')">Month view</a></li>
+                <li><a (click)="onShowPanel('year')">Year view</a></li>
+            </ul>
+        </div>
+    </div>
 
+    <div *ngIf="showDayView" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Day view</h3>
+        </div>
+        <div class="panel-body">
+            Chosen day: {{_dateServ.getDayName(choosenStartDate)}} {{choosenStartDate | date}}
+
+
+            <base-chart class="dashboard-chart"
+                        [data]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"
+                        [series]="barChartSeries"
+                        [legend]="barChartLegend"
+                        [series]="barChartSeries"
+                        [chartType]="barChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)">
+            </base-chart>
+        </div>
+    </div>
+
+    <div *ngIf="showWeekView" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Week view</h3>
+        </div>
+        <div class="panel-body">
+
+        </div>
+    </div>
+
+    <div *ngIf="showMonthView" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Month view</h3>
+        </div>
+        <div class="panel-body">
+            Panel content
+        </div>
+    </div>
+
+    <div *ngIf="showYearView" class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Year view</h3>
+        </div>
+        <div class="panel-body">
+            Panel content
+        </div>
+    </div>
 </div>

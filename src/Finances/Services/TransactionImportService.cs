@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Finances.Models;
 using Finances.Services.ConvertToTransactionStrategy;
 using Microsoft.AspNet.Hosting;
@@ -37,7 +38,7 @@ namespace Finances.Services
         private string[] GetFileBody(string filename)
         {
             string filePath = $"{_env.WebRootPath}\\uploads\\{filename}";
-            return System.IO.File.ReadAllLines(filePath);
+            return System.IO.File.ReadAllLines(filePath, Encoding.GetEncoding("ISO-8859-2"));
         }
     }
 }

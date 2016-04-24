@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.Identity;
-using System.Security.Claims;
-using System;
 
 namespace Finances.Models
 {
@@ -62,8 +61,27 @@ namespace Finances.Models
 
         public void AddTransactions(List<Transaction> transactions)
         {
-            foreach (var transaction in transactions) _ctx.Transactions.Add(transaction);
+            foreach (var transaction in transactions)
+                _ctx.Transactions.Add(transaction);
+        }
 
+        public void AddTag(Tag tag, string userId)
+        {
+            var user = GetUserById(userId);
+            _ctx.Tags.Add(new Tag()
+            {
+                User = user,
+                MonthLimit = tag.MonthLimit,
+                Title = tag.Title,
+                ShowOnDailyStats = tag.ShowOnDailyStats
+            });
+        }
+
+        public IEnumerable<Tag> GetUserTags(string userId)
+        {
+            return _ctx.Tags
+                .Where(tag => tag.User.Id == userId)
+                .ToList();
         }
     }
 }

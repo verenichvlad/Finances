@@ -46,16 +46,25 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                         [65, 59, 80, 81, 56, 55, 40],
                         [28, 48, 40, 19, 86, 27, 90]
                     ];
+                    this.avgData = {};
+                    this.avgData.day = 20;
+                    this.avgData.week = this.avgData.day * 7;
+                    this.avgData.month = 20 * _dateServ.getDaysAmountInCurrentMonth();
+                    this.choosenStartDate = new Date();
+                    this.onShowPanel(null);
                 }
-                DashboardComponent.prototype.onGetPosts = function () {
+                DashboardComponent.prototype.onGetAvgData = function () {
                     var _this = this;
-                    this._httpServ.getPosts(this.apiControllerName)
-                        .subscribe(function (responce) { return _this.responce = responce; });
+                    this._httpServ.getPosts(this.apiControllerName + '/avgData')
+                        .subscribe(function (resp) {
+                        if (_this.checkResponce(resp))
+                            _this.avgData = resp;
+                    });
                 };
                 DashboardComponent.prototype.onPost = function (title, body) {
                     var _this = this;
                     this._httpServ.createPost(this.apiControllerName, null)
-                        .subscribe(function (resp) { return _this.responce = resp; });
+                        .subscribe(function (resp) { _this.checkResponce(resp); });
                 };
                 // events
                 DashboardComponent.prototype.chartClicked = function (e) {
@@ -63,6 +72,30 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                 };
                 DashboardComponent.prototype.chartHovered = function (e) {
                     console.log(e);
+                };
+                DashboardComponent.prototype.onShowPanel = function (panelName) {
+                    this.hidePanels();
+                    switch (panelName) {
+                        case "day":
+                            this.showDayView = true;
+                            break;
+                        case "week":
+                            this.showWeekView = true;
+                            break;
+                        case "month":
+                            this.showMonthView = true;
+                            break;
+                        case "year":
+                            this.showYearView = true;
+                            break;
+                        default: this.showDayView;
+                    }
+                };
+                DashboardComponent.prototype.hidePanels = function () {
+                    this.showDayView = this.showWeekView = this.showMonthView = this.showYearView = false;
+                };
+                DashboardComponent.prototype.checkResponce = function (responce) {
+                    return true;
                 };
                 DashboardComponent = __decorate([
                     core_1.Component({

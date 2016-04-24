@@ -43,6 +43,15 @@ namespace Finances.Controllers.API
             return Json(Mapper.Map<IEnumerable<TransactionViewModel>>(transactions));
         }
 
+        [HttpGet("forPeriod")]
+        public JsonResult GetTransactionsForPeriod(DateTime startDate, string period)
+        {
+            IEnumerable<Transaction> transactions = null;
+            // TODO
+            return Json(false);
+
+        }
+
         [HttpGet("typesDictionary")]
         public JsonResult GetTransactionTypesDict()
         {

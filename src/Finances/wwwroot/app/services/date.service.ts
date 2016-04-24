@@ -19,4 +19,14 @@ export class DateService {
             return this.days[date.getMonth()];
         }
     }
+
+    getDaysAmountInMonth(month : number, year : number, isZeroBased : boolean) : number {
+        if(isZeroBased) --month;
+        return new Date(year, month, 0).getDate();
+    }
+
+    getDaysAmountInCurrentMonth() : number {
+        var d = new Date();
+        return new Date(d.getMonth(), d.getFullYear(), 0).getDate();
+    }
 }

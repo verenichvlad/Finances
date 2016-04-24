@@ -11,19 +11,35 @@ import {CHART_DIRECTIVES} from 'ng2-charts/ng2-charts';
     directives: [CHART_DIRECTIVES, NgClass, CORE_DIRECTIVES, FORM_DIRECTIVES]
 })
 export class DashboardComponent {
-    responce: string;
-    apiControllerName: string = 'dashboard';
-    
-    constructor(private _httpServ: HttpService, private _dateServ : DateService) { }
+    private choosenStartDate : Date;
+    private showDayView : boolean;
+    private showWeekView :boolean;
+    private showMonthView :boolean;
+    private showYearView :boolean;
+    private avgData;
 
-    onGetPosts() {
-        this._httpServ.getPosts(this.apiControllerName)
-            .subscribe(responce => this.responce = responce);
+    private apiControllerName: string = 'dashboard';
+    
+    constructor(private _httpServ: HttpService, private _dateServ : DateService) {
+        this.avgData = {};
+        this.avgData.day = 20;
+        this.avgData.week = this.avgData.day * 7;
+        this.avgData.month = 20 * _dateServ.getDaysAmountInCurrentMonth();
+        this.choosenStartDate = new Date();
+        this.onShowPanel(null);
+    }
+
+    onGetAvgData() {
+        this._httpServ.getPosts(this.apiControllerName + '/avgData')
+            .subscribe(resp => {
+                if(this.checkResponce(resp))
+                    this.avgData = resp;
+            });
     }
 
     onPost(title: string, body: string) {
         this._httpServ.createPost(this.apiControllerName, null)
-            .subscribe(resp => this.responce = resp);
+            .subscribe(resp => {this.checkResponce(resp)});
     }
 
 
@@ -48,5 +64,24 @@ export class DashboardComponent {
     }
     chartHovered(e:any) {
         console.log(e);
+    }
+
+    onShowPanel(panelName : string) {
+        this.hidePanels();
+        switch(panelName) {
+            case "day": this.showDayView = true; break;
+            case "week": this.showWeekView = true; break;
+            case "month": this.showMonthView = true; break;
+            case "year": this.showYearView = true; break;
+            default: this.showDayView;
+        }
+    }
+
+    private hidePanels() : void {
+        this.showDayView = this.showWeekView = this.showMonthView = this.showYearView = false;
+    }
+
+    private checkResponce(responce) : boolean {
+        return true;
     }
 }

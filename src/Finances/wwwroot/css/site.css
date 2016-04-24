@@ -94,9 +94,6 @@ a:hover {
 .hide {
   display: none; }
 
-/*-------------------------------------------------------*/
-/*MEDIA QUERIES*/
-/*-------------------------------------------------------*/
 .app {
   margin: 0;
   padding: 0;
@@ -137,7 +134,8 @@ a:hover {
   position: fixed;
   top: 92vh;
   left: 2vw;
-  color: rgba(25, 25, 25, 0.8); }
+  color: rgba(25, 25, 25, 0.8);
+  transition: none; }
 
 .brand_menu-opened {
   color: rgba(255, 255, 255, 0.7);
@@ -175,7 +173,7 @@ a:hover {
           color: #fefefe; }
 
 .user-info {
-  color: #fefefe;
+  color: rgba(255, 255, 255, 0.7);
   text-align: center;
   padding-top: 20px; }
   .user-info i {
@@ -195,11 +193,13 @@ a:hover {
 
 .menu-btn_toggle {
   position: fixed;
-  zoom: 0.7;
-  left: 348px;
+  left: 250px;
   top: 0;
   color: #fefefe;
-  z-index: 9999999; }
+  z-index: 9999999;
+  font-size: 20px;
+  width: 50px;
+  height: 50px; }
   .menu-btn_toggle:hover {
     color: rgba(255, 255, 255, 0.7);
     background-color: transparent !important; }
@@ -248,3 +248,45 @@ a:hover {
 
 .technologies-section {
   margin-left: 50px; }
+
+@media (max-width: 992px) {
+  .brand_menu-opened {
+    display: none; }
+  .menu-btn_toggle {
+    left: auto;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    font-size: 30px; }
+  .slideout-menu__open {
+    width: 100%; }
+  .user-info {
+    text-align: center;
+    padding-top: 2.5em; }
+    .user-info p {
+      font-size: 1.5em; }
+  .menu__utility {
+    text-align: center;
+    padding: 3em 0 !important; }
+    .menu__utility i {
+      display: block;
+      font-size: 24px; }
+    .menu__utility a {
+      padding: 1.5em 1.5em !important;
+      font-size: 1.3em; }
+  .logout-link {
+    right: 0; } }
+
+@media (max-width: 1500px) {
+  .brand {
+    right: 0;
+    left: auto;
+    top: 0;
+    position: absolute;
+    padding: 1.5em; }
+  .brand_menu-opened {
+    padding: 0;
+    right: auto;
+    top: 92vh;
+    left: calc(150px - 65px);
+    position: fixed; } }

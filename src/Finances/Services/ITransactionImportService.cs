@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Finances.Models;
+﻿using Finances.Models;
 
 namespace Finances.Services
 {

@@ -27,7 +27,6 @@ export class TransactionsComponent implements OnInit{
 
     constructor(private _httpServ: HttpService, private _dateServ: DateService) {
         this.vm.transactions = [];
-        this.vm.newTransaction = {};
 
         this.uploader.UploadCompleted.on((res) => this.onGetTransactions());
     }
