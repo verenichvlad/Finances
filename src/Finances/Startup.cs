@@ -76,6 +76,8 @@ namespace Finances
             Mapper.Initialize(config =>
             {
                 config.CreateMap<Transaction, TransactionViewModel>().ReverseMap();
+                config.CreateMap<Tag, TagViewModel>().ReverseMap();
+                config.CreateMap<User, UserViewModel>().ReverseMap();
             });
 
             app.UseIdentity();

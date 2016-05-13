@@ -40,6 +40,8 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
                     this.isLoading = false;
                     this.uploader = new ng2_file_upload_1.FileUploader({ url: URL });
                     this.hasBaseDropZoneOver = false;
+                    this.currentPage = 1;
+                    this.maxItemsPerPage = 10;
                     this.vm.transactions = [];
                     this.uploader.UploadCompleted.on(function (res) { return _this.onGetTransactions(); });
                 }
@@ -96,6 +98,10 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
                     }
                     return "-";
                 };
+                TransactionsComponent.prototype.isOutTrans = function (n) {
+                    var type = this.getTransactionTypeStr(n);
+                    return type.indexOf('Out') > -1;
+                };
                 TransactionsComponent.prototype.getDate = function () {
                     return new Date();
                 };
@@ -114,6 +120,29 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
                 };
                 TransactionsComponent.prototype.fileOverBase = function (e) {
                     this.hasBaseDropZoneOver = e;
+                };
+                TransactionsComponent.prototype.getPageAmount = function () {
+                    var itemsAmount = this.vm.transactions.length;
+                    var res = itemsAmount / this.maxItemsPerPage;
+                    if (itemsAmount % this.maxItemsPerPage > 0)
+                        res++;
+                    return res;
+                };
+                TransactionsComponent.prototype.getPagesArray = function () {
+                    var res = [];
+                    var page = 1;
+                    var pageAmount = this.getPageAmount();
+                    while (page <= pageAmount) {
+                        res.push(page++);
+                    }
+                    return res;
+                };
+                TransactionsComponent.prototype.getCurrentPageItems = function () {
+                    var startItemIndex = this.currentPage * this.maxItemsPerPage - this.maxItemsPerPage;
+                    var endItemIndex = startItemIndex + this.maxItemsPerPage;
+                    if (endItemIndex > this.vm.transactions.length)
+                        endItemIndex = this.vm.transactions.length;
+                    return this.vm.transactions.slice(startItemIndex, endItemIndex);
                 };
                 TransactionsComponent = __decorate([
                     core_1.Component({

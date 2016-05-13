@@ -22,17 +22,24 @@ System.register(["angular2/core", './../../services/http.service'], function(exp
             SettingsComponent = (function () {
                 function SettingsComponent(_httpServ) {
                     this._httpServ = _httpServ;
-                    this._apiControllerName = 'settings';
+                    this.showUserSettings = false;
+                    this.isLoading = false;
                 }
-                SettingsComponent.prototype.onPost = function (title, body) {
-                    var _this = this;
-                    this._httpServ.createPost(this._apiControllerName, null)
-                        .subscribe(function (resp) { return _this._resp = resp; });
+                SettingsComponent.prototype.ngOnInit = function () {
+                    this.getUser();
                 };
-                SettingsComponent.prototype.getUserData = function () {
+                SettingsComponent.prototype.getUser = function () {
                     var _this = this;
-                    this._httpServ.getPosts(this._apiControllerName)
-                        .subscribe(function (responce) { return _this.user = responce; });
+                    this.isLoading = true;
+                    this._httpServ.getPosts('settings/user')
+                        .subscribe(function (responce) {
+                        _this.user = responce;
+                        _this.isLoading = false;
+                    });
+                };
+                SettingsComponent.prototype.onPost = function (user) {
+                    this._httpServ.createPost('settings', user)
+                        .subscribe(function (resp) { });
                 };
                 SettingsComponent = __decorate([
                     core_1.Component({

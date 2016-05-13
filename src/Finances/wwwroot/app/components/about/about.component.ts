@@ -6,5 +6,8 @@
 })
 
 export class AboutComponent {
+    ifDataArrived() {
 
+        return true;
+    }
 }

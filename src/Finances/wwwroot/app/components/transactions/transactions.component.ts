@@ -86,6 +86,11 @@ export class TransactionsComponent implements OnInit{
         return "-";
     }
 
+    isOutTrans(n : number) {
+        var type = this.getTransactionTypeStr(n);
+        return type.indexOf('Out') > -1;
+    }
+
     getDate() {
         return new Date();
     }
@@ -113,5 +118,35 @@ export class TransactionsComponent implements OnInit{
 
     private fileOverBase(e:any) {
         this.hasBaseDropZoneOver = e;
+    }
+
+    private currentPage = 1;
+    private maxItemsPerPage = 10;
+
+    getPageAmount() : number {
+        var itemsAmount = this.vm.transactions.length;
+
+        var res = itemsAmount / this.maxItemsPerPage
+        if(itemsAmount % this.maxItemsPerPage > 0)
+            res++;
+        return res;
+    }
+
+    getPagesArray() {
+        var res=[];
+        var page=1;
+        var pageAmount = this.getPageAmount();
+        while(page <= pageAmount){
+            res.push(page++);
+        }
+        return res;
+    }
+
+    getCurrentPageItems() {
+        var startItemIndex = this.currentPage * this.maxItemsPerPage - this.maxItemsPerPage;
+        var endItemIndex = startItemIndex + this.maxItemsPerPage;
+        if(endItemIndex > this.vm.transactions.length)
+            endItemIndex = this.vm.transactions.length;
+        return this.vm.transactions.slice(startItemIndex, endItemIndex);
     }
 }

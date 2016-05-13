@@ -1,15 +1,18 @@
 ﻿<div class="container">
     <h1 class="branding-header">Settings</h1>
 
-    <h3>User settings</h3>
+    <i *ngIf="isLoading" class="fin-api_loading"></i>
 
-    <button class="btn btn-danger">Edit user</button>
+    <button (click)="showUserSettings = !showUserSettings" class="btn btn-danger">Edit user</button>
 
-    <div class="user-edit">
-        <p>Username: {{}}</p>
-        <p>Email: {{}}</p>
-        <p>Password: {{}}</p>
+    <div *ngIf="showUserSettings">
+        <h3>User settings</h3>
+
+        <div class="user-edit">
+            <p>Username: {{user.username}}</p>
+            <p>Email: {{user.email}}</p>
+            <p>FirstName: {{user.firstName}}</p>
+            <p>SecondName: {{user.secondName}}</p>
+        </div>
     </div>
-
-
 </div>

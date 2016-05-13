@@ -10,7 +10,9 @@ namespace Finances.Models
         bool SaveAll();
         User GetUserById(string currentUserId);
         bool RemoveTransaction(int id);
+        bool RemoveTag(int id);
         void AddTag(Tag tag, string userId);
         IEnumerable<Tag> GetUserTags(string userId);
+        void ChangeUser(User user, string userId);
     }
 }

@@ -19,6 +19,9 @@ System.register(["angular2/core"], function(exports_1) {
             AboutComponent = (function () {
                 function AboutComponent() {
                 }
+                AboutComponent.prototype.ifDataArrived = function () {
+                    return true;
+                };
                 AboutComponent = __decorate([
                     core_1.Component({
                         selector: "about",

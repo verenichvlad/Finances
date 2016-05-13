@@ -26,12 +26,16 @@ System.register(["angular2/core", "../../services/http.service"], function(expor
                     this.showAddForm = false;
                     this.isLoading = false;
                 }
+                PlanComponent.prototype.ngOnInit = function () {
+                    this.onGetTags();
+                };
                 PlanComponent.prototype.onGetTags = function () {
                     var _this = this;
                     this.isLoading = true;
                     this._httpServ.getPosts('tags')
                         .subscribe(function (responce) {
-                        _this.tags = responce;
+                        if (responce)
+                            _this.tags = responce;
                         _this.isLoading = false;
                     });
                 };
@@ -43,12 +47,20 @@ System.register(["angular2/core", "../../services/http.service"], function(expor
                         _this.onGetTags();
                     });
                 };
+                PlanComponent.prototype.onRemoveTag = function (id) {
+                    var _this = this;
+                    this.isLoading = true;
+                    this._httpServ.deletePost('tags', id)
+                        .subscribe(function (resp) {
+                        _this.onGetTags();
+                    });
+                };
                 PlanComponent.prototype.onAddTagSubmit = function (form) {
                     var tag = {
                         id: -1,
                         title: form.value['title'],
                         monthLimit: form.value['monthLimit'],
-                        showOnDailyStats: form.value['showOnDailyStats']
+                        showOnDailyStats: form.value['showOnDailyStats'] || false
                     };
                     this.onPostTag(tag);
                     this.showAddForm = false;

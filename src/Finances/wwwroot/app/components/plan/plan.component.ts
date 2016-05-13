@@ -1,4 +1,4 @@
-﻿import {Component} from "angular2/core";
+﻿import {Component, OnInit} from "angular2/core";
 import {ITag} from "./tag";
 import {HttpService} from "../../services/http.service";
 
@@ -8,17 +8,23 @@ import {HttpService} from "../../services/http.service";
     providers: [HttpService]
 })
 
-export class PlanComponent {
+export class PlanComponent implements OnInit {
     private tags = [];
     private showAddForm = false;
     private isLoading = false;
 
     constructor(private _httpServ: HttpService) {}
 
+    ngOnInit():any {
+        this.onGetTags();
+    }
+
+
     onGetTags() {
         this.isLoading = true;
         this._httpServ.getPosts('tags')
             .subscribe(responce => {
+                if(responce)
                 this.tags = responce;
                 this.isLoading = false;
             });
@@ -32,12 +38,20 @@ export class PlanComponent {
             });
     }
 
+    onRemoveTag(id: number) {
+        this.isLoading = true;
+        this._httpServ.deletePost('tags', id)
+            .subscribe(resp => {
+                this.onGetTags();
+            });
+    }
+
     onAddTagSubmit(form) {
         var tag : ITag = {
             id: -1,
             title: form.value['title'],
             monthLimit: form.value['monthLimit'],
-            showOnDailyStats: form.value['showOnDailyStats']
+            showOnDailyStats: form.value['showOnDailyStats'] || false
         };
 
         this.onPostTag(tag);

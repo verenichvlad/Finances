@@ -94,6 +94,9 @@ a:hover {
 .hide {
   display: none; }
 
+.t-v-middle {
+  vertical-align: middle; }
+
 .app {
   margin: 0;
   padding: 0;
@@ -209,6 +212,16 @@ a:hover {
   width: 1000px;
   height: 500px; }
 
+.add-form__c-box {
+  vertical-align: middle;
+  margin-right: 10px !important;
+  width: 20px;
+  height: 20px; }
+
+.table__c-box {
+  width: 20px;
+  height: 20px; }
+
 .dropzone {
   display: block;
   width: 100%;
@@ -239,6 +252,12 @@ a:hover {
   position: absolute;
   bottom: 10px;
   left: 10px; }
+
+.row_red {
+  background: rgba(255, 0, 0, 0.1); }
+
+.row_green {
+  background: rgba(0, 255, 0, 0.1); }
 
 .tech-img {
   width: 150px; }

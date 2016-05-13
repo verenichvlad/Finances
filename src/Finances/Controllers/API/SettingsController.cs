@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Net;
+using AutoMapper;
 using Finances.Models;
 using Finances.ViewModels;
 using Microsoft.AspNet.Mvc;
@@ -22,6 +24,29 @@ namespace Finances.Controllers.API
         {
             User user = _repo.GetUserById(User.GetUserId());
             return Json(Mapper.Map<UserViewModel>(user));
+        }
+
+        [HttpPost]
+        public JsonResult ChangeUser([FromBody]UserViewModel vm)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = Mapper.Map<User>(vm);
+                    _repo.ChangeUser(user, User.GetUserId());
+
+
+                    if (_repo.SaveAll())
+                        Response.StatusCode = (int)HttpStatusCode.Created;
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(false);
+            }
+
+            return Json(null);
         }
     }
 }

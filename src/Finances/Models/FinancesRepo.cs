@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.Identity;
+using Microsoft.Data.Entity;
 
 namespace Finances.Models
 {
@@ -20,7 +21,7 @@ namespace Finances.Models
         {
             return _ctx.Transactions
                 .Where(trans => trans.User.Id == currentUserId)
-                .OrderBy(t => t.CreationDate)
+                .OrderByDescending(t => t.CreationDate)
                 .ToList();
         }
 
@@ -82,6 +83,26 @@ namespace Finances.Models
             return _ctx.Tags
                 .Where(tag => tag.User.Id == userId)
                 .ToList();
+        }
+
+        public void ChangeUser(User user, string userId)
+        {
+            var dbUser = GetUserById(userId);
+
+            dbUser.FirstName = user.FirstName;
+            dbUser.SecondName = user.SecondName;
+            dbUser.Email = user.Email;
+            dbUser.UserName = user.UserName;
+        }
+
+        public bool RemoveTag(int id)
+        {
+            var tagToRemove = _ctx.Tags.FirstOrDefault(tag => tag.Id == id);
+
+            if (tagToRemove == null) return false;
+            else _ctx.Tags.Remove(tagToRemove);
+
+            return true;
         }
     }
 }

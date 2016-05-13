@@ -17,10 +17,10 @@
         <tr>
             <td class="alert alert-warning" colspan="5" *ngIf="vm.transactions.length < 1">No transactions added yet!</td>
         </tr>
-        <tr class="transactions-table__row" *ngFor="#transaction of vm.transactions">
+        <tr class="transactions-table__row" *ngFor="#transaction of getCurrentPageItems()">
             <td>{{transaction.creationDate | date}}</td>
             <td>{{transaction.title}}</td>
-            <td>{{transaction.amount}}</td>
+            <td [class.row_red]="isOutTrans(transaction.transactionType)" [class.row_green]="!isOutTrans(transaction.transactionType)">{{transaction.amount}}</td>
             <td>{{getTransactionTypeStr(transaction.transactionType)}}</td>
             <td (click)="onRemoveTransaction(transaction.id)"><button class="btn btn-danger">Remove</button> </td>
         </tr>
@@ -38,6 +38,23 @@
         </tr>
         </tbody>
     </table>
+
+    <nav>
+        <ul class="pagination pagination-lg">
+            <li [class.disabled]="currentPage <= 1">
+                <a (click)="currentPage = currentPage - 1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li [class.active]="currentPage == page" *ngFor="#page of getPagesArray()"><a (click)="currentPage = page">{{page}}</a></li>
+            <li [class.disabled]="currentPage === getPageAmount()">
+                <a (click)="currentPage = currentPage + 1" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
     <button *ngIf="!showAddForm && !showDropZone" (click)="showAddForm = true" class="btn btn-success">Add</button>
     <button *ngIf="!showAddForm && !showDropZone" (click)="showDropZone = true" class="btn btn-success">Drop file</button>
     <button *ngIf="showAddForm || showDropZone" (click)="showAddForm = false; showDropZone = flase" class="btn btn-info">Exit</button>

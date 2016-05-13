@@ -1,5 +1,6 @@
-﻿import {Component} from "angular2/core";
+﻿import {Component, OnInit} from "angular2/core";
 import {HttpService} from './../../services/http.service';
+import {IUser} from "./user";
 
 
 @Component({
@@ -7,22 +8,30 @@ import {HttpService} from './../../services/http.service';
     templateUrl: "app/components/settings/settings.html",
     providers: [HttpService]
 })
-export class SettingsComponent {
-    private _apiControllerName: string = 'settings';
-    private _resp : any;
+export class SettingsComponent implements OnInit {
     private user: any;
-
+    private showUserSettings = false;
+    private isLoading : boolean = false;
 
     constructor(private _httpServ: HttpService) { }
 
-
-    onPost(title: string, body: string) {
-        this._httpServ.createPost(this._apiControllerName, null)
-            .subscribe(resp => this._resp = resp);
+    ngOnInit():any {
+        this.getUser();
     }
 
-    getUserData() {
-        this._httpServ.getPosts(this._apiControllerName)
-            .subscribe(responce => this.user = responce);
+
+    getUser() {
+        this.isLoading = true;
+        this._httpServ.getPosts('settings/user')
+            .subscribe(responce =>
+            {
+                this.user = responce
+                this.isLoading = false;
+            });
+    }
+
+    onPost(user : IUser) {
+        this._httpServ.createPost('settings', user)
+            .subscribe(resp => {});
     }
 }

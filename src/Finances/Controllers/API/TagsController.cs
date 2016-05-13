@@ -1,20 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using AutoMapper;
 using Finances.Models;
 using Finances.ViewModels;
 using Microsoft.AspNet.Mvc;
 using System.Security.Claims;
-using Microsoft.AspNet.Authorization;
-using System.Linq;
-using System.Threading.Tasks;
-using Finances.Services;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
 
 namespace Finances.Controllers.API
 {
@@ -51,15 +42,23 @@ namespace Finances.Controllers.API
                     var tag = Mapper.Map<Tag>(vm);
                     _repo.AddTag(tag, User.GetUserId());
 
-
                     if (_repo.SaveAll())
                         Response.StatusCode = (int)HttpStatusCode.Created;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Json(false);
             }
+
+            return Json(null);
+        }
+
+        [HttpDelete("{id}")]
+        public JsonResult Delete(int id)
+        {
+            if (_repo.RemoveTag(id) && _repo.SaveAll()) Response.StatusCode = (int)HttpStatusCode.OK;
+            else Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
 
             return Json(null);
         }

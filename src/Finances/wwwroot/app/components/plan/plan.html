@@ -1,7 +1,10 @@
 ﻿<div class="container">
     <h1 class="branding-header">Plan</h1>
 
+    <i *ngIf="isLoading" class="fin-api_loading"></i>
+
 <p>Just start add tags with month limits</p>
+    <form (ngSubmit)="onAddTagSubmit(f)" #f="ngForm">
     <table class="table">
         <thead>
         <tr>
@@ -16,23 +19,22 @@
             <td class="alert alert-warning" colspan="5" *ngIf="tags.length < 1">No tags added yet!</td>
         </tr>
         <tr class="transactions-table__row" *ngFor="#tag of tags">
-            <td>{{tag.title}}</td>
+            <td>{{'#' + tag.title}}</td>
             <td>{{tag.monthLimit}}</td>
-            <td><input type="checkbox" class="form-control" value="{{tag.showOnDailyStats}}" disabled="true"></td>
+            <td *ngIf="tag.showOnDailyStats"><input type="checkbox" class="table__c-box" checked="checked" disabled="true"></td>
+            <td *ngIf="!tag.showOnDailyStats"><input type="checkbox" class="table__c-box"  disabled="true"></td>
             <td (click)="onRemoveTag(tag.id)"><button class="btn btn-danger">Remove</button> </td>
         </tr>
-        <form *ngIf="showAddForm" (ngSubmit)="onAddTagSubmit(f)" #f="ngForm">
-        <tr>
-
+            <tr *ngIf="showAddForm">
                 <td><input ngControl="title" type="text" placeholder="Title" class="form-control" required/></td>
-                <td><input ngControl="monthLimit" type="number" placeholder="Month Limit" value="0" class="form-control"/></td>
-                <td><input ngControl="showOnDailyStats" type="checkbox" class="form-control">Show on daily stats</td>
+                <td><input ngControl="monthLimit" type="number" placeholder="Month Limit" class="form-control"/></td>
+                <td><input ngControl="showOnDailyStats" class="add-form__c-box" type="checkbox"><span class="t-v-middle">Show on daily stats</span></td>
                 <td><button type="submit" class="btn btn-success" [disabled]="!f.valid">Ok</button></td>
-        </tr>
-        </form>
+            </tr>
         </tbody>
     </table>
-
+    </form>
     <button *ngIf="!showAddForm" (click)="showAddForm = true" class="btn btn-success">Add</button>
+    <button *ngIf="showAddForm" (click)="showAddForm = false" class="btn btn-danger">Cancel</button>
 </div>
 
