@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNet.Identity;
-using Microsoft.Data.Entity;
 
 namespace Finances.Models
 {
     public class FinancesRepo : IFinancesRepo
     {
         private FinancesContext _ctx;
-        private UserManager<User> _userManager; 
+        private UserManager<User> _userManager;
 
         public FinancesRepo(FinancesContext ctx, UserManager<User> userManager)
         {
@@ -50,14 +49,13 @@ namespace Finances.Models
             return _ctx.SaveChanges() > 0;
         }
 
-        public bool RemoveTransaction(int id)
+        public void RemoveTransaction(int id)
         {
             var transToRemove = _ctx.Transactions.FirstOrDefault(trans => trans.Id == id);
 
-            if (transToRemove == null) return false;
-            else _ctx.Transactions.Remove(transToRemove);
+            if (transToRemove == null) throw new Exception("Failed to remove transaction");
 
-            return true;
+            _ctx.Transactions.Remove(transToRemove);
         }
 
         public void AddTransactions(List<Transaction> transactions)
@@ -95,14 +93,20 @@ namespace Finances.Models
             dbUser.UserName = user.UserName;
         }
 
-        public bool RemoveTag(int id)
+        public void RemoveTag(int id)
         {
             var tagToRemove = _ctx.Tags.FirstOrDefault(tag => tag.Id == id);
 
-            if (tagToRemove == null) return false;
-            else _ctx.Tags.Remove(tagToRemove);
+            if (tagToRemove == null) throw new Exception("Failed to remove Tag");
 
-            return true;
+            _ctx.Tags.Remove(tagToRemove);
+        }
+
+        public void UpdateTransaction(Transaction transaction)
+        {
+            var transactionToChange = _ctx.Transactions.FirstOrDefault(t => t.Id == transaction.Id);
+            if(transactionToChange == null) throw new Exception("No matching transaction was found");
+            transactionToChange = transaction;
         }
     }
 }

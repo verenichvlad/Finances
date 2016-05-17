@@ -19,14 +19,42 @@
         </div>
     </div>
 
-    <div *ngIf="showDayView" class="panel panel-default">
+    <div *ngIf="showDayView" class="panel panel-default dashboard-panel">
         <div class="panel-heading">
             <h3 class="panel-title">Day view</h3>
         </div>
         <div class="panel-body">
-            Chosen day: {{_dateServ.getDayName(choosenStartDate)}} {{choosenStartDate | date}}
+            <p>Today: {{_dateServ.getDayName(choosenStartDate)}} {{choosenStartDate | date}}</p>
 
+            <p>Daily max: </p>
+            <p>This day sum: </p>
+            <br>
+            <p>Today's expances:</p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="alert alert-warning" colspan="5" *ngIf="currentExpances.length < 1">No expances this day!</td>
+                    </tr>
+                    <tr class="transactions-table__row" *ngFor="#expance of currentExpances">
+                        <td>{{expance.title}}</td>
+                        <td>{{expance.amount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
+    <div *ngIf="showWeekView" class="panel panel-default dashboard-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">Week view</h3>
+        </div>
+        <div class="panel-body">
             <base-chart class="dashboard-chart"
                         [data]="barChartData"
                         [labels]="barChartLabels"
@@ -41,16 +69,7 @@
         </div>
     </div>
 
-    <div *ngIf="showWeekView" class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Week view</h3>
-        </div>
-        <div class="panel-body">
-
-        </div>
-    </div>
-
-    <div *ngIf="showMonthView" class="panel panel-default">
+    <div *ngIf="showMonthView" class="panel panel-default dashboard-panel">
         <div class="panel-heading">
             <h3 class="panel-title">Month view</h3>
         </div>
@@ -59,7 +78,7 @@
         </div>
     </div>
 
-    <div *ngIf="showYearView" class="panel panel-default">
+    <div *ngIf="showYearView" class="panel panel-default dashboard-panel">
         <div class="panel-heading">
             <h3 class="panel-title">Year view</h3>
         </div>

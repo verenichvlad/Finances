@@ -17,6 +17,6 @@ namespace Finances.ViewModels
         public DateTime CreationDate { get; set; }
         [Required]
         public TransactionType TransactionType { get; set; }
-        public IEnumerable<Tag> Tags { get; set; }
+        public Tag[] Tags { get; set; }
     }
 }

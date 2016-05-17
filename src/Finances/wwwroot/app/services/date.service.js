@@ -46,6 +46,14 @@ System.register(['angular2/core'], function(exports_1) {
                     var d = new Date();
                     return new Date(d.getMonth(), d.getFullYear(), 0).getDate();
                 };
+                DateService.prototype.rangeWeek = function (dateStr) {
+                    if (!dateStr)
+                        dateStr = new Date().getTime();
+                    var dt = new Date(dateStr);
+                    dt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+                    dt = new Date(dt.getTime() - (dt.getDay() > 0 ? (dt.getDay() - 1) * 1000 * 60 * 60 * 24 : 6 * 1000 * 60 * 60 * 24));
+                    return { start: dt, end: new Date(dt.getTime() + 1000 * 60 * 60 * 24 * 7 - 1) };
+                };
                 DateService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [])

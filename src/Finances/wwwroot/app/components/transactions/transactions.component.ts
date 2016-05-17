@@ -6,6 +6,7 @@ import {Transaction} from "./transaction";
 import {FILE_UPLOAD_DIRECTIVES, FileUploader} from "../file-upload/ng2-file-upload";
 
 const API_CONTROLLER_NAME = 'transactions';
+const TAGS_API_CONTR_NAME = 'tags';
 const URL = 'http://localhost:2528/api/' + API_CONTROLLER_NAME + "/upload";
 
 
@@ -20,8 +21,9 @@ export class TransactionsComponent implements OnInit{
     private vm: any = {};
     private transactionTypes = [];
     private isLoading : boolean = false;
+    private tags;
 
-    private showAddForm: boolean;
+    private showAddForm : boolean;
     private showDropZone : boolean;
     private postSucceeded : boolean;
 
@@ -34,6 +36,16 @@ export class TransactionsComponent implements OnInit{
     ngOnInit():any {
         this.onGetTransactions();
         this.onGetTransactionTypes();
+        this.onGetTags();
+    }
+
+    onGetTags() {
+        this.isLoading = true;
+        this._httpServ.getPosts(TAGS_API_CONTR_NAME)
+            .subscribe(responce => {
+                this.tags = responce;
+                this.isLoading = false;
+            });
     }
 
     onGetTransactions() {
@@ -62,6 +74,15 @@ export class TransactionsComponent implements OnInit{
     onPostTransaction(vm: Transaction) {
         this.isLoading = true;
         this._httpServ.createPost(API_CONTROLLER_NAME, vm)
+            .subscribe(resp => {
+                this.postSucceeded = resp;
+                this.onGetTransactions();
+            });
+    }
+
+    onUpdateTransaction(vm : Transaction) {
+        this.isLoading = true;
+        this._httpServ.createPost(API_CONTROLLER_NAME + '/update', vm)
             .subscribe(resp => {
                 this.postSucceeded = resp;
                 this.onGetTransactions();
@@ -148,5 +169,52 @@ export class TransactionsComponent implements OnInit{
         if(endItemIndex > this.vm.transactions.length)
             endItemIndex = this.vm.transactions.length;
         return this.vm.transactions.slice(startItemIndex, endItemIndex);
+    }
+
+
+    public query = '';
+    public filteredList = [];
+
+    filter() {
+        if (this.query !== ""){
+            this.filteredList = this.tags.filter(function(tag){
+                return tag.title.toLowerCase().indexOf(this.query.toLowerCase()) > -1;
+            }.bind(this));
+        }else{
+            this.filteredList = [];
+        }
+    }
+
+    select(item){
+        this.query = item.title;
+        this.filteredList = [];
+    }
+
+    showAddTag(transaction) {
+        for(var trans of this.vm.transactions){
+            if(trans.id === transaction.id) {
+                trans.showAddTag = true;
+            }
+        }
+    }
+
+    addTagToTransaction(transaction, tag) {
+        if(tag.length < 2) return;
+
+        var tagsToAdd = this.tags.filter(function (t) {
+            return t.title.toLowerCase().indexOf(tag.toLowerCase()) > -1;
+        });
+
+        var transactionToUpdate : Transaction = {
+            amount: transaction.amount,
+            creationDate: new Date(transaction.creationDate),
+            description: transaction.description,
+            tags: tagsToAdd,
+            transactionType: transaction.transactionType,
+            title: transaction.title,
+            id: transaction.id
+        };
+
+        this.onUpdateTransaction(transactionToUpdate);
     }
 }

@@ -222,6 +222,9 @@ a:hover {
   width: 20px;
   height: 20px; }
 
+.dashboard-panel {
+  margin-top: 20px; }
+
 .dropzone {
   display: block;
   width: 100%;
@@ -258,6 +261,10 @@ a:hover {
 
 .row_green {
   background: rgba(0, 255, 0, 0.1); }
+
+.tag-input {
+  width: 80%;
+  display: inline-block; }
 
 .tech-img {
   width: 150px; }

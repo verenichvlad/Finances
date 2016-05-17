@@ -22,11 +22,5 @@ namespace Finances.Controllers.API
         {
             return null;
         }
-
-        [HttpGet("avgData")]
-        public JsonResult GetAvgExpancesData()
-        {
-            return Json(20);
-        }
     }
 }

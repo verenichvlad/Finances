@@ -1,3 +1,4 @@
+import {ITag} from "../plan/tag";
 export interface Transaction {
     id: number;
     title:string;
@@ -5,5 +6,5 @@ export interface Transaction {
     description:string;
     creationDate : Date;
     transactionType : number;
-    tags : string[];
+    tags : ITag[];
 }

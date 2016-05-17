@@ -7,14 +7,11 @@ using Finances.Models;
 using Finances.ViewModels;
 using Microsoft.AspNet.Mvc;
 using System.Security.Claims;
-using Microsoft.AspNet.Authorization;
 using System.Linq;
-using System.Threading.Tasks;
 using Finances.Services;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
 
 namespace Finances.Controllers.API
 {
@@ -43,15 +40,6 @@ namespace Finances.Controllers.API
             return Json(Mapper.Map<IEnumerable<TransactionViewModel>>(transactions));
         }
 
-        [HttpGet("forPeriod")]
-        public JsonResult GetTransactionsForPeriod(DateTime startDate, string period)
-        {
-            IEnumerable<Transaction> transactions = null;
-            // TODO
-            return Json(false);
-
-        }
-
         [HttpGet("typesDictionary")]
         public JsonResult GetTransactionTypesDict()
         {
@@ -68,27 +56,29 @@ namespace Finances.Controllers.API
         [HttpPost]
         public JsonResult CreateTransaction([FromBody]TransactionViewModel vm)
         {
-            try
+            return BasicApiControllerActions.Create(_repo, this, r =>
             {
-                if (ModelState.IsValid)
+                var transaction = Mapper.Map<Transaction>(vm);
+                _repo.AddTransaction(transaction, User.GetUserId());
+            });
+        }
+
+        [HttpPost("update")]
+        public JsonResult UpdateTransaction([FromBody]TransactionViewModel vm)
+        {
+            return BasicApiControllerActions.Update(_repo, this, r =>
+            {
+                var trans = Mapper.Map<Transaction>(vm);
+                foreach (var tag in vm.Tags)
                 {
-                    var trans = Mapper.Map<Transaction>(vm);
-                    _repo.AddTransaction(trans, User.GetUserId());
-
-
-                    if (_repo.SaveAll())
+                    trans.TransactionTagMaps.Add(new TransactionTagMap()
                     {
-                        Response.StatusCode = (int)HttpStatusCode.Created;
-                    }
+                        Tag = tag,
+                        Transaction = trans
+                    });
                 }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-            return Json(null);
+                _repo.UpdateTransaction(trans);
+            });
         }
 
         [HttpPost("upload")]
@@ -110,14 +100,13 @@ namespace Finances.Controllers.API
             return Json(true);
         }
 
+
+
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            if (_repo.RemoveTransaction(id) && _repo.SaveAll()) Response.StatusCode = (int) HttpStatusCode.OK;
-            else Response.StatusCode = (int) HttpStatusCode.ExpectationFailed;
-
-            return Json(null);
+            return BasicApiControllerActions.Delete(_repo, this, r => r.RemoveTransaction(id));
         }
     }
 }

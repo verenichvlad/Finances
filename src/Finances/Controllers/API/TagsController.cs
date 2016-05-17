@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Collections.Generic;
 using AutoMapper;
 using Finances.Models;
 using Finances.ViewModels;
@@ -21,7 +19,6 @@ namespace Finances.Controllers.API
             _repo = repo;
         }
 
-
         [HttpGet]
         public JsonResult GetUserTags()
         {
@@ -35,32 +32,17 @@ namespace Finances.Controllers.API
         [HttpPost]
         public JsonResult CreateTag([FromBody]TagViewModel vm)
         {
-            try
+            return BasicApiControllerActions.Create(_repo, this, r =>
             {
-                if (ModelState.IsValid)
-                {
-                    var tag = Mapper.Map<Tag>(vm);
-                    _repo.AddTag(tag, User.GetUserId());
-
-                    if (_repo.SaveAll())
-                        Response.StatusCode = (int)HttpStatusCode.Created;
-                }
-            }
-            catch (Exception ex)
-            {
-                return Json(false);
-            }
-
-            return Json(null);
+                var tag = Mapper.Map<Tag>(vm);
+                _repo.AddTag(tag, User.GetUserId());
+            });                                                          
         }
 
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
-            if (_repo.RemoveTag(id) && _repo.SaveAll()) Response.StatusCode = (int)HttpStatusCode.OK;
-            else Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
-
-            return Json(null);
+            return BasicApiControllerActions.Delete(_repo, this, r => r.RemoveTag(id));
         }
 
     }

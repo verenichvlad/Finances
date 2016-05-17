@@ -46,19 +46,26 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                         [65, 59, 80, 81, 56, 55, 40],
                         [28, 48, 40, 19, 86, 27, 90]
                     ];
-                    this.avgData = {};
-                    this.avgData.day = 20;
-                    this.avgData.week = this.avgData.day * 7;
-                    this.avgData.month = 20 * _dateServ.getDaysAmountInCurrentMonth();
                     this.choosenStartDate = new Date();
-                    this.onShowPanel(null);
                 }
-                DashboardComponent.prototype.onGetAvgData = function () {
+                DashboardComponent.prototype.ngOnInit = function () {
+                    this.onGetDailyMax();
+                    this.onGetExpancesData();
+                };
+                DashboardComponent.prototype.onGetExpancesData = function () {
                     var _this = this;
-                    this._httpServ.getPosts(this.apiControllerName + '/avgData')
+                    this._httpServ.getPosts(this.apiControllerName + '/expances')
                         .subscribe(function (resp) {
                         if (_this.checkResponce(resp))
-                            _this.avgData = resp;
+                            _this.allExpances = resp;
+                    });
+                };
+                DashboardComponent.prototype.onGetDailyMax = function () {
+                    var _this = this;
+                    this._httpServ.getPosts(this.apiControllerName + '/dailyMax')
+                        .subscribe(function (resp) {
+                        if (_this.checkResponce(resp))
+                            _this.dailyMax = resp;
                     });
                 };
                 DashboardComponent.prototype.onPost = function (title, body) {
@@ -66,21 +73,37 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                     this._httpServ.createPost(this.apiControllerName, null)
                         .subscribe(function (resp) { _this.checkResponce(resp); });
                 };
-                // events
-                DashboardComponent.prototype.chartClicked = function (e) {
-                    console.log(e);
+                DashboardComponent.prototype.FilterExpancesByDate = function (startDate, endDate) {
+                    this.currentExpances = this.allExpances.filter(function (exp) {
+                        return exp.creationDate >= startDate && exp.creationDate <= endDate;
+                    });
                 };
-                DashboardComponent.prototype.chartHovered = function (e) {
-                    console.log(e);
+                DashboardComponent.prototype.FilterCurrentExpancesByShowDaily = function () {
+                    this.currentExpances = this.currentExpances.filter(function (exp) {
+                        if (exp.filter(function (tag) {
+                            return tag.showOnDailyStats;
+                        }).length > 0)
+                            return true;
+                    });
+                };
+                DashboardComponent.prototype.getExpancesSum = function () {
+                    var sum = 0;
+                    for (var expance in this.currentExpances) {
+                        sum += expance.amount;
+                    }
+                    return sum;
                 };
                 DashboardComponent.prototype.onShowPanel = function (panelName) {
                     this.hidePanels();
                     switch (panelName) {
                         case "day":
                             this.showDayView = true;
+                            this.FilterExpancesByDate(new Date(), new Date());
+                            this.FilterCurrentExpancesByShowDaily();
                             break;
                         case "week":
                             this.showWeekView = true;
+                            this.FilterExpancesByDate(this._dateServ.rangeWeek(null).start, this._dateServ.rangeWeek(null).end);
                             break;
                         case "month":
                             this.showMonthView = true;
@@ -88,14 +111,23 @@ System.register(["angular2/core", './../../services/http.service', './../../serv
                         case "year":
                             this.showYearView = true;
                             break;
-                        default: this.showDayView;
+                        default:
+                            this.showDayView = true;
+                            break;
                     }
                 };
                 DashboardComponent.prototype.hidePanels = function () {
                     this.showDayView = this.showWeekView = this.showMonthView = this.showYearView = false;
                 };
-                DashboardComponent.prototype.checkResponce = function (responce) {
+                DashboardComponent.prototype.checkResponce = function (r) {
                     return true;
+                };
+                // events
+                DashboardComponent.prototype.chartClicked = function (e) {
+                    console.log(e);
+                };
+                DashboardComponent.prototype.chartHovered = function (e) {
+                    console.log(e);
                 };
                 DashboardComponent = __decorate([
                     core_1.Component({

@@ -9,7 +9,7 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, common_1, http_service_1, date_service_1, ng2_file_upload_1;
-    var API_CONTROLLER_NAME, URL, TransactionsComponent;
+    var API_CONTROLLER_NAME, TAGS_API_CONTR_NAME, URL, TransactionsComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -29,6 +29,7 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
             }],
         execute: function() {
             API_CONTROLLER_NAME = 'transactions';
+            TAGS_API_CONTR_NAME = 'tags';
             URL = 'http://localhost:2528/api/' + API_CONTROLLER_NAME + "/upload";
             TransactionsComponent = (function () {
                 function TransactionsComponent(_httpServ, _dateServ) {
@@ -42,12 +43,24 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
                     this.hasBaseDropZoneOver = false;
                     this.currentPage = 1;
                     this.maxItemsPerPage = 10;
+                    this.query = '';
+                    this.filteredList = [];
                     this.vm.transactions = [];
                     this.uploader.UploadCompleted.on(function (res) { return _this.onGetTransactions(); });
                 }
                 TransactionsComponent.prototype.ngOnInit = function () {
                     this.onGetTransactions();
                     this.onGetTransactionTypes();
+                    this.onGetTags();
+                };
+                TransactionsComponent.prototype.onGetTags = function () {
+                    var _this = this;
+                    this.isLoading = true;
+                    this._httpServ.getPosts(TAGS_API_CONTR_NAME)
+                        .subscribe(function (responce) {
+                        _this.tags = responce;
+                        _this.isLoading = false;
+                    });
                 };
                 TransactionsComponent.prototype.onGetTransactions = function () {
                     var _this = this;
@@ -75,6 +88,15 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
                     var _this = this;
                     this.isLoading = true;
                     this._httpServ.createPost(API_CONTROLLER_NAME, vm)
+                        .subscribe(function (resp) {
+                        _this.postSucceeded = resp;
+                        _this.onGetTransactions();
+                    });
+                };
+                TransactionsComponent.prototype.onUpdateTransaction = function (vm) {
+                    var _this = this;
+                    this.isLoading = true;
+                    this._httpServ.createPost(API_CONTROLLER_NAME + '/update', vm)
                         .subscribe(function (resp) {
                         _this.postSucceeded = resp;
                         _this.onGetTransactions();
@@ -143,6 +165,45 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
                     if (endItemIndex > this.vm.transactions.length)
                         endItemIndex = this.vm.transactions.length;
                     return this.vm.transactions.slice(startItemIndex, endItemIndex);
+                };
+                TransactionsComponent.prototype.filter = function () {
+                    if (this.query !== "") {
+                        this.filteredList = this.tags.filter(function (tag) {
+                            return tag.title.toLowerCase().indexOf(this.query.toLowerCase()) > -1;
+                        }.bind(this));
+                    }
+                    else {
+                        this.filteredList = [];
+                    }
+                };
+                TransactionsComponent.prototype.select = function (item) {
+                    this.query = item.title;
+                    this.filteredList = [];
+                };
+                TransactionsComponent.prototype.showAddTag = function (transaction) {
+                    for (var _i = 0, _a = this.vm.transactions; _i < _a.length; _i++) {
+                        var trans = _a[_i];
+                        if (trans.id === transaction.id) {
+                            trans.showAddTag = true;
+                        }
+                    }
+                };
+                TransactionsComponent.prototype.addTagToTransaction = function (transaction, tag) {
+                    if (tag.length < 2)
+                        return;
+                    var tagsToAdd = this.tags.filter(function (t) {
+                        return t.title.toLowerCase().indexOf(tag.toLowerCase()) > -1;
+                    });
+                    var transactionToUpdate = {
+                        amount: transaction.amount,
+                        creationDate: new Date(transaction.creationDate),
+                        description: transaction.description,
+                        tags: tagsToAdd,
+                        transactionType: transaction.transactionType,
+                        title: transaction.title,
+                        id: transaction.id
+                    };
+                    this.onUpdateTransaction(transactionToUpdate);
                 };
                 TransactionsComponent = __decorate([
                     core_1.Component({
