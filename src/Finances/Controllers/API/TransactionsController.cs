@@ -37,7 +37,17 @@ namespace Finances.Controllers.API
 
             if (transactions == null) return Json(null);
 
-            return Json(Mapper.Map<IEnumerable<TransactionViewModel>>(transactions));
+            var vm = Mapper.Map<IEnumerable<TransactionViewModel>>(transactions);
+            foreach (var transactionViewModel in vm)
+            {
+                var transaction = transactions.FirstOrDefault(dr => dr.Id == transactionViewModel.Id);
+                foreach (var transactionTagMap in transaction.TransactionTagMaps)
+                {
+                    transactionViewModel.Tags = transactionViewModel.Tags ?? new List<TagViewModel>();
+                    transactionViewModel.Tags.Add(Mapper.Map<TagViewModel>(_repo.GetTagById(transactionTagMap.TagId)));
+                }
+            }
+            return Json(vm);
         }
 
         [HttpGet("typesDictionary")]
@@ -46,7 +56,7 @@ namespace Finances.Controllers.API
             var dict = Enum.GetValues(typeof(TransactionType))
                .Cast<TransactionType>()
                .ToDictionary(t => (int)t, t => t.ToString())
-               .Select(dc => new { value = dc.Key, name = dc.Value});
+               .Select(dc => new { value = dc.Key, name = dc.Value });
 
             return Json(dict);
         }
@@ -71,10 +81,12 @@ namespace Finances.Controllers.API
                 var trans = Mapper.Map<Transaction>(vm);
                 foreach (var tag in vm.Tags)
                 {
+                    trans.TransactionTagMaps = trans.TransactionTagMaps ?? new List<TransactionTagMap>();
+
                     trans.TransactionTagMaps.Add(new TransactionTagMap()
                     {
-                        Tag = tag,
-                        Transaction = trans
+                        TagId = tag.Id,
+                        TransactionId = trans.Id
                     });
                 }
                 _repo.UpdateTransaction(trans);

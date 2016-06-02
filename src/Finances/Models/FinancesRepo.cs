@@ -18,10 +18,19 @@ namespace Finances.Models
 
         public IEnumerable<Transaction> GetCurrentUserTransactions(string currentUserId)
         {
-            return _ctx.Transactions
+            var tsactions = _ctx.Transactions
                 .Where(trans => trans.User.Id == currentUserId)
                 .OrderByDescending(t => t.CreationDate)
                 .ToList();
+
+            var tsactionTagMap = _ctx.TransactionTagMaps.ToList();
+
+            foreach (var tsaction in tsactions)
+            {
+                tsaction.TransactionTagMaps = tsactionTagMap.Where(ttMap => ttMap.TransactionId == tsaction.Id).ToList();
+            }
+
+            return tsactions;
         }
 
         public void AddTransaction(Transaction trans, string currentUserId)
@@ -105,8 +114,48 @@ namespace Finances.Models
         public void UpdateTransaction(Transaction transaction)
         {
             var transactionToChange = _ctx.Transactions.FirstOrDefault(t => t.Id == transaction.Id);
-            if(transactionToChange == null) throw new Exception("No matching transaction was found");
-            transactionToChange = transaction;
+
+            if (transactionToChange == null) throw new Exception("No matching transaction was found");
+            //transactionToChange.TransactionTagMaps = transactionToChange.TransactionTagMaps ?? new List<TransactionTagMap>();
+
+            var tm = _ctx.TransactionTagMaps.Where(ttmap => ttmap.TransactionId == transaction.Id);
+
+
+            if(transaction.TransactionTagMaps == null)
+                transaction.TransactionTagMaps = new List<TransactionTagMap>();
+
+            var tagIdsSave = transaction.TransactionTagMaps.Select(dr => dr.TagId).ToList();
+            var tagIdsAdd = tm.Select(dr => dr.TagId).ToList();
+            var mapsTORemove = tm.Where(p => !tagIdsSave.Contains(p.TagId));
+            var mapsToAdd = transaction.TransactionTagMaps.Where(p => !tagIdsAdd.Contains(p.TagId));
+
+            foreach (TransactionTagMap map in mapsTORemove)
+                _ctx.TransactionTagMaps.Remove(map);
+            foreach (TransactionTagMap map in mapsToAdd)
+                _ctx.TransactionTagMaps.Add(map);
+
+            _ctx.Update(transactionToChange);
+
+            //transactionToChange.TransactionTagMaps = transaction.TransactionTagMaps;
+            transactionToChange.Amount = transaction.Amount;
+            transactionToChange.Description = transaction.Description;
+            transactionToChange.Title = transaction.Title;
+            transactionToChange.TransactionType = transaction.TransactionType;
+        }
+
+        public Tag GetTagById(int id)
+        {
+            return _ctx.Tags.FirstOrDefault(t => t.Id == id);
+        }
+
+        public List<TransactionTagMap> GetTransactionTagMapsByTagId(int id)
+        {
+            return _ctx.TransactionTagMaps.Where(map => map.TagId == id).ToList();
+        }
+
+        public List<TransactionTagMap> GetTransactionTagMapsByTransactionId(int id)
+        {
+            return _ctx.TransactionTagMaps.Where(map => map.TransactionId == id).ToList();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Finances.Models
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Settings> Settings { get; set; }
+        public DbSet<TransactionTagMap> TransactionTagMaps { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -57,6 +57,7 @@ export class TransactionsComponent implements OnInit{
 
                 for(var transaction of this.vm.transactions) {
                     transaction.creationDate = Date.parse(transaction.creationDate);
+                    transaction.showAddTag = false;
                 }
             });
     }
@@ -185,9 +186,12 @@ export class TransactionsComponent implements OnInit{
         }
     }
 
-    select(item){
+    select(item, transaction){
         this.query = item.title;
         this.filteredList = [];
+        this.addTagToTransaction(transaction, item);
+        transaction.showAddTag = false
+        this.query = '';
     }
 
     showAddTag(transaction) {
@@ -199,17 +203,34 @@ export class TransactionsComponent implements OnInit{
     }
 
     addTagToTransaction(transaction, tag) {
-        if(tag.length < 2) return;
+        if(tag.title.length < 2) return;
 
-        var tagsToAdd = this.tags.filter(function (t) {
-            return t.title.toLowerCase().indexOf(tag.toLowerCase()) > -1;
+        transaction.tags = transaction.tags || [];
+
+        transaction.tags.push(tag);
+        var transactionToUpdate : Transaction = {
+            amount: transaction.amount,
+            creationDate: new Date(transaction.creationDate),
+            description: transaction.description,
+            tags: transaction.tags,
+            transactionType: transaction.transactionType,
+            title: transaction.title,
+            id: transaction.id
+        };
+
+        this.onUpdateTransaction(transactionToUpdate);
+    }
+
+    unpinTag(transaction, tag) {
+        var tagsToKeep = transaction.tags.filter(function (t) {
+            return t.id !== tag.id;
         });
 
         var transactionToUpdate : Transaction = {
             amount: transaction.amount,
             creationDate: new Date(transaction.creationDate),
             description: transaction.description,
-            tags: tagsToAdd,
+            tags: tagsToKeep,
             transactionType: transaction.transactionType,
             title: transaction.title,
             id: transaction.id

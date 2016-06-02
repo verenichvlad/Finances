@@ -41,7 +41,7 @@ namespace Finances.Controllers.API
                     if (!_repo.SaveAll()) throw new Exception(Constants.ExceptionConstants.FailedToSave);
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 return controller.Json(false);
                 //TODO Add logger to log ex

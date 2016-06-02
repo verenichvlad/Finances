@@ -16,25 +16,28 @@
         </thead>
         <tbody>
         <tr>
-            <td class="alert alert-warning" colspan="5" *ngIf="vm.transactions.length < 1">No transactions added yet!</td>
+            <td class="alert alert-warning" colspan="6" *ngIf="vm.transactions.length < 1">No transactions added yet!</td>
         </tr>
         <tr class="transactions-table__row" *ngFor="#transaction of getCurrentPageItems()">
             <td>{{transaction.creationDate | date}}</td>
             <td>{{transaction.title}}</td>
             <td [class.row_red]="isOutTrans(transaction.transactionType)" [class.row_green]="!isOutTrans(transaction.transactionType)">{{transaction.amount}}</td>
             <td *ngIf="!transaction.showAddTag">
-                <span *ngFor="#tag of transaction.tags">{{tag.title}}</span>
-                <button (click)="showAddTag(transaction)" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i></button>
+                <span *ngFor="#tag of transaction.tags" class="transaction-tag" (click)="unpinTag(transaction, tag)">
+                    <span class="transaction-tag__title">{{tag.title}}</span>
+                    <span class="transaction-tag__remove"><i class="glyphicon glyphicon-remove"></i></span>
+                </span>
+                <button (click)="showAddTag(transaction)" class="btn btn-success add-tag-btn"><i class="glyphicon glyphicon-plus"></i></button>
             </td>
             <td *ngIf="transaction.showAddTag">
-                <input #tag id="tag" placeholder="tag" type="text" class="form-control tag-input" [(ngModel)]=query (keyup)=filter()>
-                <span>
-                    <button (click)="addTagToTransaction(transaction, tag.value)" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i></button>
+                <span class="tag-add-span">
+                    <input #tag id="tag" placeholder="tag" type="text" class="form-control tag-input" [(ngModel)]=query (keyup)=filter()>
+                    <button (click)="transaction.showAddTag = false" class="btn btn-success add-tag-btn canceladd-btn"><i class="glyphicon glyphicon-arrow-left"></i></button>
                 </span>
                 <div class="suggestions" *ngIf="filteredList.length > 0">
-                    <ul *ngFor="#tag of filteredList" >
+                    <ul class="dropdown-menu tag-dropdown" *ngFor="#tag of filteredList" >
                         <li>
-                            <a (click)="select(tag)">{{tag.title}}</a>
+                            <a (click)="select(tag, transaction)">{{tag.title}}</a>
                         </li>
                     </ul>
                 </div>

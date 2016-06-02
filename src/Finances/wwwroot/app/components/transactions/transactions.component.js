@@ -72,6 +72,7 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
                         for (var _i = 0, _a = _this.vm.transactions; _i < _a.length; _i++) {
                             var transaction = _a[_i];
                             transaction.creationDate = Date.parse(transaction.creationDate);
+                            transaction.showAddTag = false;
                         }
                     });
                 };
@@ -176,9 +177,12 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
                         this.filteredList = [];
                     }
                 };
-                TransactionsComponent.prototype.select = function (item) {
+                TransactionsComponent.prototype.select = function (item, transaction) {
                     this.query = item.title;
                     this.filteredList = [];
+                    this.addTagToTransaction(transaction, item);
+                    transaction.showAddTag = false;
+                    this.query = '';
                 };
                 TransactionsComponent.prototype.showAddTag = function (transaction) {
                     for (var _i = 0, _a = this.vm.transactions; _i < _a.length; _i++) {
@@ -189,16 +193,30 @@ System.register(["angular2/core", "angular2/common", './../../services/http.serv
                     }
                 };
                 TransactionsComponent.prototype.addTagToTransaction = function (transaction, tag) {
-                    if (tag.length < 2)
+                    if (tag.title.length < 2)
                         return;
-                    var tagsToAdd = this.tags.filter(function (t) {
-                        return t.title.toLowerCase().indexOf(tag.toLowerCase()) > -1;
+                    transaction.tags = transaction.tags || [];
+                    transaction.tags.push(tag);
+                    var transactionToUpdate = {
+                        amount: transaction.amount,
+                        creationDate: new Date(transaction.creationDate),
+                        description: transaction.description,
+                        tags: transaction.tags,
+                        transactionType: transaction.transactionType,
+                        title: transaction.title,
+                        id: transaction.id
+                    };
+                    this.onUpdateTransaction(transactionToUpdate);
+                };
+                TransactionsComponent.prototype.unpinTag = function (transaction, tag) {
+                    var tagsToKeep = transaction.tags.filter(function (t) {
+                        return t.id !== tag.id;
                     });
                     var transactionToUpdate = {
                         amount: transaction.amount,
                         creationDate: new Date(transaction.creationDate),
                         description: transaction.description,
-                        tags: tagsToAdd,
+                        tags: tagsToKeep,
                         transactionType: transaction.transactionType,
                         title: transaction.title,
                         id: transaction.id

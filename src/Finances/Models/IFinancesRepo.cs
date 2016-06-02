@@ -15,5 +15,6 @@ namespace Finances.Models
         IEnumerable<Tag> GetUserTags(string userId);
         void ChangeUser(User user, string userId);
         void UpdateTransaction(Transaction transaction);
+        Tag GetTagById(int id);
     }
 }

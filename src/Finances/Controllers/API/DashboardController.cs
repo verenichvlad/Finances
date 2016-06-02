@@ -1,8 +1,10 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using AutoMapper;
 using Finances.Models;
 using Finances.ViewModels;
 using Microsoft.AspNet.Mvc;
-using System.Security.Claims;
 
 namespace Finances.Controllers.API
 {
@@ -17,10 +19,24 @@ namespace Finances.Controllers.API
             _repo = repo;
         }
 
-        [HttpGet("graph1")]
-        public JsonResult GetExpancesGraphData()
+        [HttpGet("expances")]
+        public JsonResult GetExpances()
         {
-            return null;
+            var transactions = _repo.GetCurrentUserTransactions(User.GetUserId());
+
+            if (transactions == null) return Json(null);
+
+            var vm = Mapper.Map<IEnumerable<TransactionViewModel>>(transactions);
+            foreach (var transactionViewModel in vm)
+            {
+                var transaction = transactions.FirstOrDefault(dr => dr.Id == transactionViewModel.Id);
+                foreach (var transactionTagMap in transaction.TransactionTagMaps)
+                {
+                    transactionViewModel.Tags = transactionViewModel.Tags ?? new List<TagViewModel>();
+                    transactionViewModel.Tags.Add(Mapper.Map<TagViewModel>(_repo.GetTagById(transactionTagMap.TagId)));
+                }
+            }
+            return Json(vm.Where(tvm => tvm.TransactionType == TransactionType.BankOut || tvm.TransactionType == TransactionType.UserOut));
         }
     }
 }

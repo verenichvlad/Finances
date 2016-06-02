@@ -1,89 +1,163 @@
 ﻿<div class="container">
     <h1 class="branding-header">Dashboard</h1>
 
-    <p class="alert alert-warning">Here you can see your expances and incomes status</p>
+    <p *ngIf="showInfo" (click)="showInfo = false" class="alert alert-warning"><i class="glyphicon glyphicon-info-sign"></i> Here you can track your expances</p>
 
     <div class="period-container">
         <span>Choose period: </span>
         <div class="btn-group">
-            <button (click)="onShowPanel('day')" type="button" class="btn btn-danger">Day view</button>
+            <button (click)="loadView('day')" type="button" class="btn btn-danger">Today</button>
             <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="caret"></span>
                 <span class="sr-only"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a (click)="onShowPanel('week')">Week view</a></li>
-                <li><a (click)="onShowPanel('month')">Month view</a></li>
-                <li><a (click)="onShowPanel('year')">Year view</a></li>
+                <li><a (click)="loadView('week', null)">This week</a></li>
+                <li><a (click)="loadView('month', null)">This month</a></li>
             </ul>
         </div>
     </div>
 
+
+
     <div *ngIf="showDayView" class="panel panel-default dashboard-panel">
         <div class="panel-heading">
             <h3 class="panel-title">Day view</h3>
+            <i (mouseover)="showInfo = true" class="glyphicon glyphicon-info-sign view-icon"></i>
         </div>
         <div class="panel-body">
-            <p>Today: {{_dateServ.getDayName(choosenStartDate)}} {{choosenStartDate | date}}</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Chosen day:</h3>
+                    <p class="lead">{{_dateServ.getDayName(choosenStartDate)}} {{choosenStartDate | date}}</p>
+                    <h3>Filter by daily tags</h3>
+                    <input *ngIf="filterDaily" type="checkbox" checked (change)="showDailyChanged(dailyCb)" #dailyCb>
+                    <input *ngIf="!filterDaily" type="checkbox" (change)="showDailyChanged(dailyCb2)" #dailyCb2>
+                </div>
+                <div class="col-md-6">
+                    <h3>Daily max:</h3>
+                    <p class="lead">{{dailyMax}}</p>
+                    <h3>Chosen day sum:</h3>
+                    <p class="lead">{{currentExpancesSum}}</p>
+                </div>
+            </div>
 
-            <p>Daily max: </p>
-            <p>This day sum: </p>
-            <br>
-            <p>Today's expances:</p>
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Amount</th>
+                        <th><h4>Title</h4></th>
+                        <th><h4>Amount</h4></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="alert alert-warning" colspan="5" *ngIf="currentExpances.length < 1">No expances this day!</td>
+                        <td class="alert alert-warning" colspan="2" *ngIf="currentExpances.length < 1">No expances this day!</td>
                     </tr>
                     <tr class="transactions-table__row" *ngFor="#expance of currentExpances">
-                        <td>{{expance.title}}</td>
-                        <td>{{expance.amount}}</td>
+                        <td><p class="lead">{{expance.title}}</p></td>
+                        <td><p class="lead">{{expance.amount}}</p></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
+
+
     <div *ngIf="showWeekView" class="panel panel-default dashboard-panel">
         <div class="panel-heading">
             <h3 class="panel-title">Week view</h3>
+            <i (mouseover)="showInfo = true" class="glyphicon glyphicon-info-sign view-icon"></i>
         </div>
         <div class="panel-body">
-            <base-chart class="dashboard-chart"
-                        [data]="barChartData"
-                        [labels]="barChartLabels"
-                        [options]="barChartOptions"
-                        [series]="barChartSeries"
-                        [legend]="barChartLegend"
-                        [series]="barChartSeries"
-                        [chartType]="barChartType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)">
-            </base-chart>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Chosen week:</h3>
+                    <p class="lead">{{_dateServ.rangeWeek(choosenStartDate).start | date}} - {{_dateServ.rangeWeek(choosenStartDate).end | date}}</p>
+                </div>
+                <div class="col-md-6">
+                    <h3>Week max:</h3>
+                    <p class="lead">{{dailyMax * 7}}</p>
+                    <h3>This week:</h3>
+                    <p class="lead">{{currentExpancesSum}}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="lead f-push-top">Weeks expances:</p>
+                    <base-chart class="chart"
+                                [data]="weekBarChartData"
+                                [labels]="weekBarChartLabels"
+                                [options]="barChartOptions"
+                                [series]="barChartSeries"
+                                [legend]="false"
+                                [series]="barChartSeries"
+                                [chartType]="barChartType"
+                                (chartHover)="chartHovered($event)"
+                                (chartClick)="weekBarChartClicked($event)">
+                    </base-chart>
+                </div>
+
+                <div class="col-md-6">
+                    <p class="lead f-push-top">Weeks expances by tag:</p>
+                    <base-chart class="chart"
+                                [data]="doughnutChartData"
+                                [labels]="doughnutChartLabels"
+                                [chartType]="doughnutChartType"
+                                [legend]="true"
+                                (chartHover)="chartHovered2($event)"
+                                (chartClick)="chartClicked($event)">
+                    </base-chart>
+                </div>
+            </div>
         </div>
     </div>
 
     <div *ngIf="showMonthView" class="panel panel-default dashboard-panel">
         <div class="panel-heading">
             <h3 class="panel-title">Month view</h3>
+            <i (mouseover)="showInfo = true" class="glyphicon glyphicon-info-sign view-icon"></i>
         </div>
         <div class="panel-body">
-            Panel content
-        </div>
-    </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Chosen month:</h3>
+                    <p class="lead">{{_dateServ.rangeWeek(null).start | date:'MMMMy'}}</p>
+                </div>
+                <div class="col-md-6">
+                    <h3>Chosen month max:</h3>
+                    <p class="lead">{{dailyMax * getDaysInMonth()}}</p>
+                    <h3>Chosen month:</h3>
+                    <p class="lead">{{currentExpancesSum}}</p>
+                </div>
+            </div>
 
-    <div *ngIf="showYearView" class="panel panel-default dashboard-panel">
-        <div class="panel-heading">
-            <h3 class="panel-title">Year view</h3>
-        </div>
-        <div class="panel-body">
-            Panel content
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="lead f-push-top">Month expances:</p>
+                    <base-chart class="chart"
+                                [data]="pieChartData"
+                                [labels]="pieChartLabels"
+                                [legend]="true"
+                                [chartType]="pieChartType"
+                                (chartHover)="chartHovered3($event)"
+                                (chartClick)="pieChartClicked($event)">
+                    </base-chart>
+                </div>
+
+                <div class="col-md-6">
+                    <p class="lead f-push-top">Month expances by tag:</p>
+                    <base-chart class="chart"
+                                [data]="polarAreaChartData"
+                                [labels]="polarAreaChartLabels"
+                                [legend]="polarAreaLegend"
+                                [chartType]="polarAreaChartType"
+                                (chartHover)="chartHovered4($event)"
+                                (chartClick)="chartClicked($event)">
+                    </base-chart>
+                </div>
+            </div>
         </div>
     </div>
 </div>
