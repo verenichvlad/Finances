@@ -244,49 +244,60 @@ export class DashboardComponent implements OnInit{
 
     setWeekBarData() {
        var weekStart = this._dateServ.rangeWeek(this.choosenStartDate).start;
-       this.weekBarChartData = [
-            [
-                this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 0)),
-                this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 1)),
-                this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 2)),
-                this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 3)),
-                this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 4)),
-                this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 5)),
-                this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 6))
-            ]
-        ];
+       //this.weekBarChartData = [
+       //     [
+       //         this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 0)),
+       //         this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 1)),
+       //         this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 2)),
+       //         this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 3)),
+       //         this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 4)),
+       //         this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 5)),
+       //         this.getExpancesSumForDay(this._dateServ.addDays(weekStart, 6))
+       //     ]
+       // ];
+
+        this.weekBarChartData = [[14, 19, 13, 12, 8, 33, 18]];
     }
 
     setDoughnutChartData() {
-        this.doughnutChartData = [];
-        this.doughnutChartLabels = [];
+        //this.doughnutChartData = [];
+        //this.doughnutChartLabels = [];
 
-        for(var i = 0; i < this.currentTags.length; i++) {
-            this.doughnutChartLabels.push(this.currentTags[i].title);
-            this.doughnutChartData.push(this.getExpancesSumForTag(this.currentTags[i].id));
-        }
+        //for(var i = 0; i < this.currentTags.length; i++) {
+        //    this.doughnutChartLabels.push(this.currentTags[i].title);
+        //    this.doughnutChartData.push(this.getExpancesSumForTag(this.currentTags[i].id));
+        //}
+
+        this.doughnutChartData = [30, 0, 80, 230, 485];
+        this.doughnutChartLabels = ['#Sports', '#Cinema', '#Transport', '#Food', '#Other'];
     }
 
     setPolarChartData() {
-        this.polarAreaChartLabels = [];
-        this.polarAreaChartData = [];
+        //this.polarAreaChartLabels = [];
+        //this.polarAreaChartData = [];
 
-        for(var i = 0; i < this.currentTags.length; i++) {
-            this.polarAreaChartLabels.push(this.currentTags[i].title);
-            this.polarAreaChartData.push(this.getExpancesSumForTag(this.currentTags[i].id));
-        }
+        //for(var i = 0; i < this.currentTags.length; i++) {
+        //    this.polarAreaChartLabels.push(this.currentTags[i].title);
+        //    this.polarAreaChartData.push(this.getExpancesSumForTag(this.currentTags[i].id));
+        //}
+
+        this.polarAreaChartLabels = ['#Sports', '#Cinema', '#Transport', '#Food', '#Other'];
+        this.polarAreaChartData = [100, 40, 232, 700, 1450];
     }
 
     setPieChartData() {
-        this.pieChartData = [];
-        this.pieChartLabels = [];
-        var spans = this._dateServ.getCurrentMonthWeekSpans();
+        //this.pieChartData = [];
+        //this.pieChartLabels = [];
+        //var spans = this._dateServ.getCurrentMonthWeekSpans();
 
 
-        for(var i = 0; i < spans.length; i++) {
-            this.pieChartLabels.push('Week ' + (i + 1));
-            this.pieChartData.push(this.getExpancesSumForWeek(spans[i].start, spans[i].end));
-        }
+        //for(var i = 0; i < spans.length; i++) {
+        //    this.pieChartLabels.push('Week ' + (i + 1));
+        //    this.pieChartData.push(this.getExpancesSumForWeek(spans[i].start, spans[i].end));
+        //}
+
+        this.pieChartData = [130, 280, 170, 90];
+        this.pieChartLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
     }
 
     private barChartOptions = {
